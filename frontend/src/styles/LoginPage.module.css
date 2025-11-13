@@ -1,0 +1,95 @@
+/* frontend/src/styles/LoginPage.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Usamos max-width para mantener el ancho del diseño de Figma */
+  max-width: 430px; 
+  margin: 0 auto;
+  padding: 0 26px; /* 26px a los lados como en tu diseño */
+  box-sizing: border-box;
+}
+
+.logo {
+  /* Dimensiones del logo en tu CSS */
+  width: 73px;
+  height: 88.12px;
+  /* Margen superior de tu diseño */
+  margin-top: 67px;
+  margin-bottom: 70px; /* Espacio antes del formulario */
+}
+
+.form {
+  width: 100%;
+  max-width: 377px; /* Ancho de los inputs en tu diseño */
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  height: 42px;
+  padding: 0 16px; /* Padding interno de tu diseño */
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  color: #333; /* Color del texto al escribir */
+  background: #F4F5F4; /* Fondo gris claro de tu diseño */
+  border-radius: 30px; /* Inputs muy redondeados */
+  border: 1px solid #F4F5F4;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: #737B7D; /* Color del placeholder de tu diseño */
+}
+
+/* Espaciado entre los inputs */
+.input:first-of-type {
+  margin-bottom: 25px; /* Espacio entre CI y Contraseña */
+}
+
+.buttonContainer {
+  /* Espacio entre el último input y el primer botón */
+  margin-top: 150px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px; /* Espacio entre los dos botones */
+  width: 100%;
+}
+
+/* Estilo base para ambos botones */
+.button,
+.buttonOutline {
+  width: 100%; /* Hacemos los botones anchos */
+  padding: 12px 18px;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 30px; /* Redondeados como los inputs */
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none; /* Quita el subrayado del Link */
+}
+
+/* Botón "Entrar" (Sólido) */
+.button {
+  background: #3F37C9;
+  color: #FFFFFF;
+  border: none;
+}
+
+/* Botón "Registrar" (Contorno) */
+.buttonOutline {
+  background: #FFFFFF;
+  color: #3C64B1;
+  border: 1px solid #4361EE;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+  text-align: center;
+  margin-top: 15px;
+}

@@ -1,0 +1,106 @@
+/* frontend/src/styles/VerifyPage.module.css */
+
+/* Este es el contenedor blanco con sombra */
+.container {
+  width: 420px;
+  margin: 100px auto; /* 100px desde arriba, centrado */
+  font-family: 'Mulish', sans-serif;
+  padding: 40px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra todo el contenido */
+}
+
+/* "Verificar tu cuenta" */
+.title {
+  text-align: center;
+  color: #222; /* Más oscuro que antes */
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+
+/* "Enviamos un código..." */
+.subtitle {
+  text-align: center;
+  color: #555;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+/* El formulario que contiene el input y el botón */
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* El input "Código de Email" */
+.input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  border: 2px solid #e5a744; /* El borde dorado de tu imagen */
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Mulish', sans-serif;
+}
+
+.input::placeholder {
+  color: #999;
+}
+
+/* El botón "Verificar" */
+.button {
+  width: 100%;
+  padding: 14px;
+  background: #6f42c1; /* El morado de tu imagen */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* El mensaje de error (si falla) */
+.error {
+  color: red;
+  font-size: 0.9em;
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* ... (tus clases .container, .title, etc. van aquí arriba) ... */
+
+/* Estilo para el botón de reenviar (se ve como un enlace) */
+.resendButton {
+  background: none;
+  border: none;
+  color: #6f42c1; /* Color de tu marca */
+  cursor: pointer;
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+  padding: 0;
+}
+
+/* Estilo cuando el botón está desactivado (en cooldown) */
+.resendButton:disabled {
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* Estilo para el mensaje de éxito (ej. "Código reenviado") */
+.successMessage {
+  color: green;
+  font-size: 0.9em;
+  text-align: center;
+  margin-top: 15px;
+}

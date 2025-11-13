@@ -10,11 +10,11 @@ import { RegisterPage } from './RegisterPage'
 import { VerifyPage } from './VerifyPage'
 import { HomePage } from './HomePage'
 
-// Define las rutas
+// Define las rutas (¡CORREGIDAS!)
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <LoginPage />,
+    element: <LoginPage />, // /login es la página de Login
   },
   {
     path: "/register",
@@ -25,9 +25,9 @@ const router = createBrowserRouter([
     element: <VerifyPage />,
   },
   {
-    // Esta será la página principal (después de iniciar sesión)
+    // Esta es la página principal (después de iniciar sesión)
     path: "/", 
-    element: <HomePage />,
+    element: <HomePage />, // / es la página de Home
   },
 ]);
 

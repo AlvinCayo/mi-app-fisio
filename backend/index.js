@@ -138,3 +138,64 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor backend corriendo en http://localhost:${PORT}`);
 });
+
+
+// --- PUNTO 4: REENVIAR CÓDIGO DE VERIFICACIÓN ---
+app.post('/api/auth/resend-code', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ error: 'Email es requerido.' });
+        }
+
+        // 1. Buscar al usuario
+        const userResult = await pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
+        if (userResult.rows.length === 0) {
+            // No decimos "Usuario no encontrado" por seguridad, por si acaso
+            return res.status(404).json({ error: 'Error al procesar la solicitud.' });
+        }
+
+        const user = userResult.rows[0];
+
+        // 2. Verificar si ya está verificado
+        if (user.esta_verificado) {
+            return res.status(400).json({ error: 'Esta cuenta ya está verificada.' });
+        }
+
+        // 3. Generar un nuevo código y una nueva expiración
+        const codigo_sms = Math.floor(100000 + Math.random() * 900000).toString();
+        // (Usaré 24 horas de expiración, como lo habíamos discutido)
+        const codigo_expiracion = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 horas
+
+        // 4. Actualizar la base de datos con el nuevo código
+        await pool.query(
+            'UPDATE usuarios SET codigo_sms = $1, codigo_expiracion = $2 WHERE email = $3',
+            [codigo_sms, codigo_expiracion, email]
+        );
+
+        // 5. Enviar el nuevo email (copiado de tu endpoint de registro)
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'Tu nuevo código de verificación',
+            html: `
+                <div style="font-family: Arial, sans-serif; text-align: center; padding: 20px;">
+                    <h2>Aquí está tu nuevo código</h2>
+                    <p>Tu nuevo código de verificación es:</p>
+                    <h1 style="font-size: 48px; letter-spacing: 5px; margin: 20px 0; color: #6f42c1;">
+                        ${codigo_sms}
+                    </h1>
+                    <p>Este código expirará en 24 horas.</p>
+                </div>
+            `
+        };
+        await transporter.sendMail(mailOptions);
+
+        console.log(`Nuevo código enviado a ${email}`);
+        res.status(200).json({ message: 'Se ha enviado un nuevo código a tu email.' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+});

@@ -1,14 +1,14 @@
+// frontend/src/LoginPage.tsx
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
-const styles: { [key: string]: React.CSSProperties } = {
-  container: { width: '300px', margin: '50px auto', fontFamily: 'Arial', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' },
-  input: { width: '100%', padding: '10px', margin: '8px 0', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px' },
-  button: { width: '100%', padding: '12px', background: '#6f42c1', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '4px', fontSize: '16px' },
-  link: { display: 'block', textAlign: 'center', marginTop: '15px', color: '#6f42c1' },
-  error: { color: 'red', fontSize: '0.9em' }
-};
+// Importa los estilos
+import styles from './styles/LoginPage.module.css';
+
+// 1. ¡Importa tu nuevo logo.svg!
+import logo from "./assets/logo.svg"; // Asegúrate de que el nombre del archivo coincida
 
 export function LoginPage() {
   const [ci, setCi] = useState('');
@@ -35,17 +35,36 @@ export function LoginPage() {
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={{textAlign: 'center'}}>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <input style={styles.input} name="ci" placeholder="CI" onChange={(e) => setCi(e.target.value)} />
-        <input style={styles.input} name="password" type="password" placeholder="Contraseña" onChange={(e) => setPassword(e.target.value)} />
+    <div className={styles.container}>
+      
+      {/* 2. Usa el logo importado en una etiqueta <img> */}
+      <img src={logo} alt="Logo Fisioterapia" className={styles.logo} /> 
+      
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <input 
+          className={styles.input} 
+          name="ci" 
+          placeholder="CI" 
+          onChange={(e) => setCi(e.target.value)} 
+        />
+        <input 
+          className={styles.input} 
+          name="password" 
+          type="password" 
+          placeholder="Contraseña" 
+          onChange={(e) => setPassword(e.target.value)} 
+        />
         
-        {error && <p style={styles.error}>{error}</p>}
+        {error && <p className={styles.error}>{error}</p>}
         
-        <button style={styles.button} type="submit">Entrar</button>
+        <div className={styles.buttonContainer}>
+          <button className={styles.button} type="submit">Entrar</button>
+          
+          <Link to="/register" className={styles.buttonOutline}>
+            Registrar
+          </Link>
+        </div>
       </form>
-      <Link to="/register" style={styles.link}>¿No tienes cuenta? Regístrate</Link>
     </div>
   );
 }
