@@ -24,3 +24,20 @@ button,
 input {
   font-family: inherit;
 }
+
+/* ... (tu código existente de 'body', '*', etc. va aquí arriba) ... */
+
+
+/* --- Oculta el ícono de 'ver contraseña' predeterminado del navegador --- */
+
+/* Para Chrome, Safari, Edge (basado en WebKit) */
+input[type="password"]::-webkit-reveal,
+input[type="password"]::-webkit-password-reveal-button {
+  display: none;
+  -webkit-appearance: none;
+}
+
+/* Para Microsoft Edge (versión antigua) */
+input[type="password"]::-ms-reveal {
+  display: none;
+}

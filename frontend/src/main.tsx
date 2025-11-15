@@ -9,50 +9,42 @@ import { LoginPage } from './LoginPage'
 import { RegisterPage } from './RegisterPage'
 import { VerifyPage } from './VerifyPage'
 import { HomePage } from './HomePage'
-
-// --- ¡NUEVAS PÁGINAS! ---
 import { ForgotPasswordPage } from './ForgotPasswordPage'
 import { ResetPasswordPage } from './ResetPasswordPage'
 import { AuthCallbackPage } from './AuthCallbackPage'
 import { AdminDashboardPage } from './AdminDashboardPage'
+import { AdminUserListPage } from './AdminUserListPage' // <-- El menú de usuarios
+
+// --- ¡NUEVAS PÁGINAS DE LISTAS! ---
+import { AdminPendingUsersPage } from './AdminPendingUsersPage'
+import { AdminActiveUsersPage } from './AdminActiveUsersPage'
 
 
-// Define las rutas (¡ACTUALIZADAS!)
+// Define las rutas
 const router = createBrowserRouter([
+  { path: "/login", element: <LoginPage /> },
+  { path: "/register", element: <RegisterPage /> },
+  { path: "/verify", element: <VerifyPage /> },
+  { path: "/", element: <HomePage /> },
+  { path: "/forgot-password", element: <ForgotPasswordPage /> },
+  { path: "/reset-password", element: <ResetPasswordPage /> },
+  { path: "/auth/callback", element: <AuthCallbackPage /> },
   {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/register",
-    element: <RegisterPage />,
-  },
-  {
-    path: "/verify",
-    element: <VerifyPage />,
-  },
-  {
-    path: "/", 
-    element: <HomePage />,
-  },
-  // --- ¡NUEVAS RUTAS! ---
-  {
-    path: "/forgot-password",
-    element: <ForgotPasswordPage />,
-  },
-  {
-    path: "/reset-password",
-    element: <ResetPasswordPage />,
-  },
-  {
-    // Esta página captura el token de Google
-    path: "/auth/callback",
-    element: <AuthCallbackPage />,
-  },
-  {
-    // Ruta protegida para el Admin
     path: "/admin/dashboard",
     element: <AdminDashboardPage />,
+  },
+  {
+    path: "/admin/users",
+    element: <AdminUserListPage />,
+  },
+  // --- ¡NUEVAS RUTAS DE ADMIN! ---
+  {
+    path: "/admin/users/pending",
+    element: <AdminPendingUsersPage />,
+  },
+  {
+    path: "/admin/users/manage", // <-- Corregido de 'active' a 'manage'
+    element: <AdminActiveUsersPage />,
   },
 ]);
 

@@ -64,7 +64,7 @@ passport.use(new GoogleStrategy({
         }
 
         // 3. Si no existe, es un usuario 100% nuevo
-        // ¡CORREGIDO! Esta query ahora solo inserta los datos de Google
+        // (Asumimos que 'ci' y 'telefono' pueden ser NULL en tu BD)
         const newUserResult = await pool.query(
             `INSERT INTO usuarios (nombre_completo, email, google_id, esta_verificado, role, status)
              VALUES ($1, $2, $3, $4, $5, $6)
@@ -111,19 +111,20 @@ const isAdmin = (req, res, next) => {
 app.post('/api/auth/register', async (req, res) => {
     try {
         const { nombreCompleto, ci, telefono, email, password } = req.body;
-        // ... (Tu validación de campos)
+        if (!nombreCompleto || !ci || !telefono || !email || !password) {
+             return res.status(400).json({ error: 'Todos los campos son obligatorios.' });
+        }
 
         const salt = await bcrypt.genSalt(10);
         const password_hash = await bcrypt.hash(password, salt);
         const codigo_sms = Math.floor(100000 + Math.random() * 900000).toString();
         
-        // ¡CORREGIDO! La variable 'codigo_expiracion' se eliminó.
-        // La base de datos calcula el tiempo con "NOW() + INTERVAL '3 minutes'"
+        // ¡CORREGIDO! La base de datos calcula el tiempo
         const newUser = await pool.query(
             `INSERT INTO usuarios (nombre_completo, ci, telefono, email, password_hash, codigo_sms, codigo_expiracion, status, role)
              VALUES ($1, $2, $3, $4, $5, $6, NOW() + INTERVAL '3 minutes', 'pendiente', 'paciente')
              RETURNING id, email`,
-            [nombreCompleto, ci, telefono, email, password_hash, codigo_sms] // <-- Array de parámetros corregido
+            [nombreCompleto, ci, telefono, email, password_hash, codigo_sms]
         );
 
         // Enviar email de verificación
@@ -149,7 +150,7 @@ app.post('/api/auth/register', async (req, res) => {
     }
 });
 
-// VERIFICACIÓN DE EMAIL (SIN CAMBIOS)
+// VERIFICACIÓN DE EMAIL
 app.post('/api/auth/verify', async (req, res) => {
     try {
         const { email, codigo_sms } = req.body; 
@@ -168,7 +169,7 @@ app.post('/api/auth/verify', async (req, res) => {
             [email]
         );
 
-        res.status(200).json({ message: 'Cuenta verificada con éxito.' }); // Mensaje actualizado
+        res.status(200).json({ message: 'Cuenta verificada con éxito.' });
 
     } catch (error) {
         console.error(error);
@@ -176,7 +177,7 @@ app.post('/api/auth/verify', async (req, res) => {
     }
 });
 
-// REENVIAR CÓDIGO (¡NUEVO Y CORREGIDO CON ARREGLO DE TIMEZONE!)
+// REENVIAR CÓDIGO (CORREGIDO CON ARREGLO DE TIMEZONE)
 app.post('/api/auth/resend-code', async (req, res) => {
     try {
         const { email } = req.body;
@@ -194,7 +195,6 @@ app.post('/api/auth/resend-code', async (req, res) => {
 
         const codigo_sms = Math.floor(100000 + Math.random() * 900000).toString();
 
-        // ¡CORREGIDO! La base de datos calcula el tiempo
         await pool.query(
             'UPDATE usuarios SET codigo_sms = $1, codigo_expiracion = NOW() + INTERVAL \'3 minutes\' WHERE email = $2',
             [codigo_sms, email]
@@ -217,7 +217,7 @@ app.post('/api/auth/resend-code', async (req, res) => {
 });
 
 
-// LOGIN (SIN CAMBIOS, tu lógica ya era correcta)
+// LOGIN
 app.post('/api/auth/login', async (req, res) => {
     try {
         const { ci, password } = req.body;
@@ -272,7 +272,6 @@ app.post('/api/auth/forgot-password', async (req, res) => {
             
             const codigo_sms = Math.floor(100000 + Math.random() * 900000).toString();
             
-            // ¡CORREGIDO! La base de datos calcula el tiempo
             await pool.query(
                 'UPDATE usuarios SET codigo_sms = $1, codigo_expiracion = NOW() + INTERVAL \'3 minutes\' WHERE email = $2',
                 [codigo_sms, email]
@@ -295,7 +294,7 @@ app.post('/api/auth/forgot-password', async (req, res) => {
     }
 });
 
-// Resetear la contraseña (SIN CAMBIOS, tu lógica ya era correcta)
+// Resetear la contraseña
 app.post('/api/auth/reset-password', async (req, res) => {
     try {
         const { email, codigo_sms, newPassword } = req.body;
@@ -340,6 +339,8 @@ app.get('/api/auth/google/callback',
         failureRedirect: `${process.env.FRONTEND_URL}/login?error=google-auth-failed` 
     }),
     (req, res) => {
+        // 'req.user' ahora contiene el usuario de la BD
+        
         if (req.user.status === 'pendiente') {
             return res.redirect(`${process.env.FRONTEND_URL}/login?status=pending`);
         }
@@ -370,6 +371,22 @@ app.get('/api/admin/pending-users', [verifyToken, isAdmin], async (req, res) => 
     }
 });
 
+// Obtener pacientes (ACTIVOS e INACTIVOS)
+app.get('/api/admin/active-users', [verifyToken, isAdmin], async (req, res) => {
+    try {
+        // --- ¡CORRECCIÓN! ---
+        // Busca solo pacientes 'activos' O 'inactivos', no 'pendientes'
+        const users = await pool.query(
+            "SELECT id, nombre_completo, email, ci, telefono, status FROM usuarios WHERE role = 'paciente' AND (status = 'activo' OR status = 'inactivo')"
+        );
+        res.status(200).json(users.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+// Aprueba a un usuario (lo pone como 'activo')
 app.post('/api/admin/users/:id/approve', [verifyToken, isAdmin], async (req, res) => {
     try {
         const { id } = req.params;
@@ -387,6 +404,7 @@ app.post('/api/admin/users/:id/approve', [verifyToken, isAdmin], async (req, res
     }
 });
 
+// Desactiva a un usuario (lo pone como 'inactivo')
 app.post('/api/admin/users/:id/deactivate', [verifyToken, isAdmin], async (req, res) => {
     try {
         const { id } = req.params;

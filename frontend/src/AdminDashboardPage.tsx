@@ -1,34 +1,21 @@
 // frontend/src/AdminDashboardPage.tsx
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import styles from './styles/AdminDashboard.module.css';
+import logo from './assets/logo.svg'; 
 
-// Define el tipo para el token decodificado
 interface DecodedToken {
   role: 'admin' | 'paciente';
-  // ... (añade otros campos)
-}
-
-// Define el tipo para un usuario pendiente
-interface PendingUser {
-  id: number;
-  nombre_completo: string;
-  email: string;
-  ci: string;
 }
 
 export function AdminDashboardPage() {
-  const [users, setUsers] = useState<PendingUser[]>([]);
   const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  const token = localStorage.getItem('authToken');
+  const token = sessionStorage.getItem('authToken'); // <-- Usa sessionStorage
 
   useEffect(() => {
-    // --- 1. Protección de la Ruta ---
     if (!token) {
       navigate('/login');
       return;
@@ -40,87 +27,75 @@ export function AdminDashboardPage() {
         setTimeout(() => navigate('/'), 3000);
       }
     } catch (e) {
-      localStorage.removeItem('authToken');
+      sessionStorage.removeItem('authToken'); // <-- Usa sessionStorage
       navigate('/login');
     }
-
-    // --- 2. Cargar los usuarios pendientes ---
-    const fetchPendingUsers = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/admin/pending-users', {
-          headers: {
-            Authorization: `Bearer ${token}` // Envía el token de admin
-          }
-        });
-        setUsers(response.data);
-      } catch (err: any) {
-        setError(err.response?.data?.error || 'Error al cargar usuarios.');
-      }
-    };
-    
-    if (token) fetchPendingUsers();
   }, [token, navigate]);
 
-  // --- 3. Funciones para aprobar o desactivar ---
-  const handleApprove = async (userId: number) => {
-    try {
-      await axios.post(`http://localhost:3000/api/admin/users/${userId}/approve`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setMessage('Usuario aprobado con éxito.');
-      setUsers(users.filter(user => user.id !== userId));
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Error al aprobar.');
-    }
+  const goToUserManagement = () => {
+    navigate('/admin/users'); // Te lleva al *menú* de usuarios
   };
 
-  const handleDeactivate = async (userId: number) => {
-     try {
-      await axios.post(`http://localhost:3000/api/admin/users/${userId}/deactivate`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setMessage('Usuario desactivado con éxito.');
-      setUsers(users.filter(user => user.id !== userId));
-    } catch (err: any) {
-      setError(err.response?.data?.error || 'Error al desactivar.');
-    }
+  const goToExerciseManagement = () => {
+    alert('Función de "Gestión de Ejercicios" no implementada');
   };
 
+  const goToStats = () => {
+    alert('Función de "Estadísticas" no implementada');
+  };
+
+  if (error) {
+    return (
+      <div className={styles.page}>
+        <header className={styles.header}>
+          <img src={logo} alt="Logo" className={styles.logo} />
+          <span className={styles.title}>Panel de Administrador</span>
+        </header>
+        <main className={styles.mainContent}>
+          <p className={styles.error}>{error}</p>
+        </main>
+      </div>
+    )
+  }
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Panel de Administrador (Fisioterapeuta)</h1>
-      {error && <p className={styles.error}>{error}</p>}
-      {message && <p className={styles.message}>{message}</p>}
+    <div className={styles.page}>
+      <header className={styles.header}>
+        <img src={logo} alt="Logo" className={styles.logo} />
+        <span className={styles.title}>Panel de Administrador</span>
+      </header>
 
-      <h2 style={{marginTop: '40px'}}>Usuarios Pendientes de Aprobación</h2>
-      {users.length === 0 ? (
-        <p>No hay usuarios pendientes.</p>
-      ) : (
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>CI</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map(user => (
-              <tr key={user.id}>
-                <td>{user.nombre_completo}</td>
-                <td>{user.email}</td>
-                <td>{user.ci}</td>
-                <td>
-                  <button onClick={() => handleApprove(user.id)} className={`${styles.button} ${styles.approveButton}`}>Aprobar</button>
-                  <button onClick={() => handleDeactivate(user.id)} className={`${styles.button} ${styles.deactivateButton}`}>Rechazar</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      <main className={styles.mainContent}>
+        <section className={styles.card}>
+          <h2 className={styles.cardTitle}>Gestión de Usuarios</h2>
+          <p className={styles.cardSubtitle}>
+            Aprobar pacientes o ver la lista de usuarios.
+          </p>
+          <button className={styles.cardButton} onClick={goToUserManagement}>
+            Ir a Gestión de Usuarios
+          </button>
+        </section>
+
+        <section className={styles.card}>
+          <h2 className={styles.cardTitle}>Gestión de Ejercicios</h2>
+          <p className={styles.cardSubtitle}>
+            Asignar o borrar rutinas de ejercicios por paciente.
+          </p>
+          <button className={styles.cardButton} onClick={goToExerciseManagement}>
+            Ir a Gestión de Ejercicios
+          </button>
+        </section>
+        
+        <section className={styles.card}>
+          <h2 className={styles.cardTitle}>Estadísticas</h2>
+          <p className={styles.cardSubtitle}>
+            Ver el progreso general de los pacientes (próximamente).
+          </p>
+          <button className={styles.cardButton} onClick={goToStats}>
+            Ver Estadísticas
+          </button>
+        </section>
+      </main>
     </div>
   );
 }

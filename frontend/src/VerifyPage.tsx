@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import styles from './styles/VerifyPage.module.css';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import styles from './styles/RegisterPage.module.css'; // Reutiliza el estilo de Registro
+import logo from './assets/logo.svg';
 
 export function VerifyPage() {
   const [codigo, setCodigo] = useState('');
@@ -43,7 +44,6 @@ export function VerifyPage() {
         codigo_sms: codigo
       });
       
-      // ¡CAMBIO! Redirige a Login con mensaje de pendiente
       navigate('/login?status=pending'); 
 
     } catch (err: any) {
@@ -71,12 +71,14 @@ export function VerifyPage() {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Verificar tu cuenta</h2>
-      <p className={styles.subtitle}>
-        Enviamos un código de 6 dígitos a <strong>{email || "tu correo"}</strong>.
-      </p>
+      <img src={logo} alt="Logo" className={styles.logo} />
       
       <form className={styles.form} onSubmit={handleSubmit}>
+        <h2 style={{textAlign: 'center'}}>Verificar tu cuenta</h2>
+        <p style={{textAlign: 'center', color: '#555', marginTop: 0}}>
+          Enviamos un código de 6 dígitos a <strong>{email || "tu correo"}</strong>.
+        </p>
+        
         <input 
           className={styles.input} 
           name="codigo" 
@@ -87,20 +89,25 @@ export function VerifyPage() {
         {error && <p className={styles.error}>{error}</p>}
         {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
         
-        <button className={styles.button} type="submit">Verificar</button>
+        <div className={styles.buttonContainer}>
+          <button className={styles.button} type="submit">Verificar</button>
+        
+          <button 
+            type="button"
+            className={styles.buttonOutline}
+            onClick={handleResendCode}
+            disabled={isResending || cooldown > 0} 
+          >
+            {isResending
+              ? 'Enviando...'
+              : cooldown > 0
+                ? `Reenviar en ${cooldown}s`
+                : 'Reenviar código'}
+          </button>
+
+          <Link to="/login" className={styles.link}>Volver a Iniciar Sesión</Link>
+        </div>
       </form>
-      
-      <button 
-        className={styles.resendButton}
-        onClick={handleResendCode}
-        disabled={isResending || cooldown > 0} 
-      >
-        {isResending
-          ? 'Enviando...'
-          : cooldown > 0
-            ? `Reenviar en ${cooldown}s`
-            : 'Reenviar código'}
-      </button>
     </div>
   );
 }

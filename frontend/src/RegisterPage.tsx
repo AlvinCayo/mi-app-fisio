@@ -1,10 +1,9 @@
-// frontend/src/RegisterPage.tsx (CORREGIDO)
+// frontend/src/RegisterPage.tsx
 
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
-// Importa estilos y assets
 import styles from './styles/RegisterPage.module.css';
 import logo from './assets/logo.svg';
 import eyeOpen from './assets/eye-open.svg';
@@ -12,7 +11,6 @@ import eyeClosed from './assets/eye-closed.svg';
 
 export function RegisterPage() {
   
-  // ¡CORREGIDO! Inicializa el estado con el objeto completo
   const [formData, setFormData] = useState({
     nombreCompleto: '',
     ci: '',
@@ -25,7 +23,6 @@ export function RegisterPage() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Estados para los íconos de los ojos
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -43,7 +40,6 @@ export function RegisterPage() {
     }
     
     try {
-      // ¡CORREGIDO! Pasa el objeto de datos completo
       await axios.post('http://localhost:3000/api/auth/register', {
         nombreCompleto: formData.nombreCompleto,
         ci: formData.ci,
@@ -65,13 +61,11 @@ export function RegisterPage() {
       
       <form className={styles.form} onSubmit={handleSubmit}>
         
-        {/* Inputs de texto normales */}
         <input className={styles.input} name="nombreCompleto" placeholder="Nombre Completo" onChange={handleChange} />
         <input className={styles.input} name="ci" placeholder="CI" onChange={handleChange} />
         <input className={styles.input} name="telefono" placeholder="Telefono" onChange={handleChange} />
         <input className={styles.input} name="email" type="email" placeholder="Email" onChange={handleChange} />
 
-        {/* --- ESTRUCTURA CORREGIDA (Contraseña 1) --- */}
         <div className={styles.passwordWrapper}>
           <input 
             className={`${styles.input} ${styles.passwordInput}`}
@@ -88,7 +82,6 @@ export function RegisterPage() {
           />
         </div>
 
-        {/* --- ESTRUCTURA CORREGIDA (Contraseña 2) --- */}
         <div className={styles.passwordWrapper}>
           <input 
             className={`${styles.input} ${styles.passwordInput}`}

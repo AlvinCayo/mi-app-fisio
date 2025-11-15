@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './styles/LoginPage.module.css'; // Reutilizamos el estilo de Login
+import styles from './styles/LoginPage.module.css'; // Reutiliza el estilo de Login
 import logo from './assets/logo.svg';
 
 export function ForgotPasswordPage() {
@@ -21,10 +21,9 @@ export function ForgotPasswordPage() {
       const response = await axios.post('http://localhost:3000/api/auth/forgot-password', { email });
       setSuccess(response.data.message);
       
-      // Llevamos al usuario a la página de resetear, pasando el email
       setTimeout(() => {
         navigate(`/reset-password?email=${email}`);
-      }, 3000); // Espera 3 seg para que lea el mensaje
+      }, 3000);
 
     } catch (err: any) {
       setError(err.response?.data?.error || 'Error en el servidor.');

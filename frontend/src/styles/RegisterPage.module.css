@@ -107,3 +107,16 @@
   font-size: 0.9em;
   text-align: center;
 }
+
+/* ... (tu código .container, .button, etc. va arriba) ... */
+
+/* --- ¡CORRECCIÓN! Oculta el ícono predeterminado del navegador --- */
+.input.passwordInput::-webkit-reveal,
+.input.passwordInput::-webkit-password-reveal-button {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.input.passwordInput::-ms-reveal {
+  display: none;
+}

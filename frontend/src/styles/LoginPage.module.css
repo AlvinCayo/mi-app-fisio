@@ -139,3 +139,19 @@
   padding: 10px;
   border-radius: 8px;
 }
+
+/* ... (tu código .container, .button, etc. va arriba) ... */
+
+/* --- ¡CORRECCIÓN! Oculta el ícono predeterminado del navegador --- */
+/* Al aplicar esto a .passwordInput, nos aseguramos de que gane 
+   en especificidad y oculte el ícono del navegador. */
+
+.input.passwordInput::-webkit-reveal,
+.input.passwordInput::-webkit-password-reveal-button {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.input.passwordInput::-ms-reveal {
+  display: none;
+}

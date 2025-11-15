@@ -1,0 +1,163 @@
+/* frontend/src/styles/AdminUserListPage.module.css */
+
+.page {
+  /* Limita el ancho a 430px como las otras páginas */
+  max-width: 430px; 
+  margin: 0 auto;
+  padding: 0 20px 20px 20px; 
+  font-family: 'Mulish', sans-serif;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+}
+
+/* --- Cabecera estilo Figma --- */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+.backArrow {
+  width: 24px; 
+  height: 24px;
+  cursor: pointer;
+}
+
+.headerTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #373F41;
+  margin: 0;
+}
+
+/* --- Estilos para las Tarjetas (en el Menú) --- */
+.mainContent {
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background: rgba(72, 149, 239, 0.06);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.cardTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: #373F41;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cardSubtitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #737B7D;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+}
+
+
+/* --- Estilos de Tabla --- */
+.pageTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #373F41;
+}
+
+.tableContainer {
+  width: 100%;
+  overflow-x: auto; 
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  font-size: 12px; 
+  white-space: nowrap; 
+}
+
+.table th {
+  background-color: #f4f4f4;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Botones de la tabla --- */
+.button {
+  border: none;
+  color: white;
+  padding: 6px 10px; 
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.approveButton {
+  background-color: #28a745; /* Verde */
+}
+
+.activateButton {
+  background-color: #28a745; /* Verde */
+}
+
+.deactivateButton {
+  background-color: #dc3545; /* Rojo */
+  margin-left: 5px;
+}
+
+/* --- Mensajes de Estado --- */
+.error {
+  color: red;
+  background: #ffe6e6;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.message {
+  color: green;
+  background: #e6ffed;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}

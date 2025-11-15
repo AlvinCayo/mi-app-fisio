@@ -1,11 +1,9 @@
-// frontend/src/ResetPasswordPage.tsx (CORREGIDO)
+// frontend/src/ResetPasswordPage.tsx
 
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-
-// Importa estilos y assets
-import styles from './styles/ResetPasswordPage.module.css'; 
+import styles from './styles/ResetPasswordPage.module.css'; // ¡Usa su propio CSS!
 import logo from './assets/logo.svg';
 import eyeOpen from './assets/eye-open.svg';
 import eyeClosed from './assets/eye-closed.svg';
@@ -21,7 +19,6 @@ export function ResetPasswordPage() {
   
   const email = searchParams.get('email');
 
-  // Estados para los íconos
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -62,8 +59,6 @@ export function ResetPasswordPage() {
       </p>
       
       <form className={styles.form} onSubmit={handleSubmit}>
-        
-        {/* Input del Código */}
         <input 
           className={styles.input} 
           name="codigo"
@@ -71,7 +66,6 @@ export function ResetPasswordPage() {
           onChange={(e) => setCodigo(e.target.value)} 
         />
         
-        {/* --- ESTRUCTURA CORREGIDA (Contraseña 1) --- */}
         <div className={styles.passwordWrapper}>
           <input 
             className={`${styles.input} ${styles.passwordInput}`}
@@ -88,7 +82,6 @@ export function ResetPasswordPage() {
           />
         </div>
         
-        {/* --- ESTRUCTURA CORREGIDA (Contraseña 2) --- */}
         <div className={styles.passwordWrapper}>
           <input 
             className={`${styles.input} ${styles.passwordInput}`}
@@ -105,11 +98,9 @@ export function ResetPasswordPage() {
           />
         </div>
         
-        {/* Mensajes de estado */}
         {error && <p className={styles.error}>{error}</p>}
         {success && <p className={styles.successMessage}>{success}</p>}
         
-        {/* Contenedor de Botones */}
         <div className={styles.buttonContainer}>
           <button className={styles.button} type="submit">Actualizar Contraseña</button>
           <Link to="/login" className={styles.link}>Volver a Iniciar Sesión</Link>
