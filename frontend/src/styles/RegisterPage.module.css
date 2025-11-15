@@ -6,7 +6,7 @@
   align-items: center;
   max-width: 430px; 
   margin: 0 auto;
-  padding: 0 26px; /* 26px a los lados como en tu diseño */
+  padding: 0 26px;
   box-sizing: border-box;
 }
 
@@ -14,14 +14,15 @@
   width: 73px;
   height: 88.12px;
   margin-top: 70px;
-  margin-bottom: 40px; /* Menos espacio que en el Login, porque hay más campos */
+  margin-bottom: 40px;
 }
 
 .form {
   width: 100%;
-  max-width: 377px; /* Ancho de los inputs en tu diseño */
+  max-width: 377px;
   display: flex;
   flex-direction: column;
+  gap: 20px; /* <--- CAMBIO AQUÍ: Añade espacio entre todos los campos */
 }
 
 .input {
@@ -30,33 +31,48 @@
   font-family: 'Mulish', sans-serif;
   font-size: 14px;
   color: #333; 
-  background: #F4F5F4; /* Fondo gris claro de tu diseño */
+  background: #F4F5F4;
   border-radius: 30px; 
   border: 1px solid #F4F5F4;
   box-sizing: border-box;
-  margin-bottom: 20px; /* Espacio entre cada input */
+  /* margin-bottom: 20px; <-- CAMBIO AQUÍ: Eliminado */
 }
 
 .input::placeholder {
-  color: #737B7D; /* Color del placeholder de tu diseño */
+  color: #737B7D;
 }
 
-/* Elimina el margen del último input antes de los botones */
-.input:last-of-type {
-  margin-bottom: 0;
+.passwordWrapper {
+  position: relative;
+  width: 100%;
+  /* margin-bottom: 20px; <-- CAMBIO AQUÍ: Eliminado */
+}
+
+.passwordIcon {
+  position: absolute;
+  top: 50%; /* <--- CAMBIO AQUÍ: Centrado vertical perfecto */
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+}
+
+.input.passwordInput {
+  margin-bottom: 0; 
+  padding-right: 45px; /* Deja espacio para el ícono */
 }
 
 .buttonContainer {
-  /* Espacio entre el último input y el primer botón */
-  margin-top: 25px; 
+  margin-top: 5px; /* Reducido gracias a 'gap' */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; /* Espacio entre los dos botones */
+  gap: 20px;
   width: 100%;
 }
 
-/* Estilo base para ambos botones */
 .button,
 .buttonOutline {
   width: 100%;
@@ -68,17 +84,15 @@
   cursor: pointer;
   box-sizing: border-box;
   text-align: center;
-  text-decoration: none; /* Quita el subrayado del Link */
+  text-decoration: none;
 }
 
-/* Botón "Registrar" (Sólido) */
 .button {
   background: #3F37C9;
   color: #FFFFFF;
   border: none;
 }
 
-/* Botón "Volver a iniciar sesión" (Contorno) */
 .buttonOutline {
   background: #FFFFFF;
   color: #4361EE;
@@ -89,5 +103,4 @@
   color: red;
   font-size: 0.9em;
   text-align: center;
-  margin-top: 15px;
 }

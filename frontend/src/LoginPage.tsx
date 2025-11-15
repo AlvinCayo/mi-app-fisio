@@ -1,44 +1,65 @@
 // frontend/src/LoginPage.tsx
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
-// Importa los estilos
 import styles from './styles/LoginPage.module.css';
+import logo from './assets/logo.svg';
+import eyeOpen from './assets/eye-open.svg';
+import eyeClosed from './assets/eye-closed.svg';
 
-// 1. ¡Importa tu nuevo logo.svg!
-import logo from "./assets/logo.svg"; // Asegúrate de que el nombre del archivo coincida
+interface DecodedToken {
+  role: 'admin' | 'paciente';
+  // ...
+}
 
 export function LoginPage() {
   const [ci, setCi] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    const status = searchParams.get('status');
+    if (status === 'pending') {
+      setSuccess("¡Gracias! Tu cuenta está pendiente de aprobación.");
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
+    setSuccess('');
     try {
       const response = await axios.post('http://localhost:3000/api/auth/login', {
         ci: ci,
         password: password
       });
-
       localStorage.setItem('authToken', response.data.token);
-      navigate('/'); 
-
+      const decodedToken = jwtDecode<DecodedToken>(response.data.token);
+      if (decodedToken.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/');
+      }
     } catch (err: any) {
       setError(err.response?.data?.error || 'Error al iniciar sesión.');
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:3000/api/auth/google';
+  };
+
   return (
     <div className={styles.container}>
-      
-      {/* 2. Usa el logo importado en una etiqueta <img> */}
-      <img src={logo} alt="Logo Fisioterapia" className={styles.logo} /> 
+      <img src={logo} alt="Logo" className={styles.logo} /> 
       
       <form className={styles.form} onSubmit={handleSubmit}>
         <input 
@@ -47,21 +68,43 @@ export function LoginPage() {
           placeholder="CI" 
           onChange={(e) => setCi(e.target.value)} 
         />
-        <input 
-          className={styles.input} 
-          name="password" 
-          type="password" 
-          placeholder="Contraseña" 
-          onChange={(e) => setPassword(e.target.value)} 
-        />
+        
+        <div className={styles.passwordWrapper}>
+          <input 
+            className={`${styles.input} ${styles.passwordInput}`}
+            name="password" 
+            type={showPassword ? "text" : "password"}
+            placeholder="Contraseña" 
+            onChange={(e) => setPassword(e.target.value)} 
+          />
+          <img 
+            src={showPassword ? eyeOpen : eyeClosed}
+            alt="Ver/Ocultar contraseña"
+            className={styles.passwordIcon}
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        </div>
         
         {error && <p className={styles.error}>{error}</p>}
+        {success && <p className={styles.successMessage}>{success}</p>}
         
         <div className={styles.buttonContainer}>
           <button className={styles.button} type="submit">Entrar</button>
           
           <Link to="/register" className={styles.buttonOutline}>
             Registrar
+          </Link>
+
+          <button 
+            type="button" 
+            className={styles.googleButton} 
+            onClick={handleGoogleLogin}
+          >
+            Iniciar sesión con Google
+          </button>
+          
+          <Link to="/forgot-password" className={styles.link}>
+            ¿Olvidaste tu contraseña?
           </Link>
         </div>
       </form>

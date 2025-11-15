@@ -3,14 +3,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-
-// Importa los estilos
 import styles from './styles/RegisterPage.module.css';
-
-// Importa tu logo
 import logo from './assets/logo.svg';
+import eyeOpen from './assets/eye-open.svg';
+import eyeClosed from './assets/eye-closed.svg';
 
 export function RegisterPage() {
+  
+  // --- ¡CORRECCIÓN AQUÍ! ---
+  // Inicializa el estado con el objeto completo
   const [formData, setFormData] = useState({
     nombreCompleto: '',
     ci: '',
@@ -19,23 +20,31 @@ export function RegisterPage() {
     password: '',
     confirmPassword: ''
   });
+  // -------------------------
+  
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
+    
+    // Estas líneas ahora funcionarán porque formData tiene las propiedades
     if (formData.password !== formData.confirmPassword) {
       setError('Las contraseñas no coinciden');
       return;
     }
-
+    
     try {
+      // --- ¡CORRECCIÓN AQUÍ! ---
+      // Pasa el objeto de datos completo, no solo "..."
       await axios.post('http://localhost:3000/api/auth/register', {
         nombreCompleto: formData.nombreCompleto,
         ci: formData.ci,
@@ -43,18 +52,17 @@ export function RegisterPage() {
         email: formData.email,
         password: formData.password
       });
-      
-      // ¡Éxito! Redirige a la página de verificación
+      // -------------------------
+
       navigate(`/verify?email=${formData.email}`); 
 
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Error al registrar. Intenta de nuevo.');
+      setError(err.response?.data?.error || 'Error al registrar.');
     }
   };
 
   return (
     <div className={styles.container}>
-      
       <img src={logo} alt="Logo" className={styles.logo} /> 
       
       <form className={styles.form} onSubmit={handleSubmit}>
@@ -62,14 +70,43 @@ export function RegisterPage() {
         <input className={styles.input} name="ci" placeholder="CI" onChange={handleChange} />
         <input className={styles.input} name="telefono" placeholder="Telefono" onChange={handleChange} />
         <input className={styles.input} name="email" type="email" placeholder="Email" onChange={handleChange} />
-        <input className={styles.input} name="password" type="password" placeholder="Contraseña" onChange={handleChange} />
-        <input className={styles.input} name="confirmPassword" type="password" placeholder="Confirme su Contraseña" onChange={handleChange} />
+
+        <div className={styles.passwordWrapper}>
+          <input 
+            className={`${styles.input} ${styles.passwordInput}`}
+            name="password" 
+            type={showPassword ? "text" : "password"} 
+            placeholder="Contraseña" 
+            onChange={handleChange} 
+          />
+          <img 
+            src={showPassword ? eyeOpen : eyeClosed}
+            alt="Ver/Ocultar"
+            className={styles.passwordIcon}
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        </div>
+
+        <div className={styles.passwordWrapper}>
+          <input 
+            className={`${styles.input} ${styles.passwordInput}`}
+            name="confirmPassword" 
+            type={showConfirm ? "text" : "password"} 
+            placeholder="Confirme su Contraseña" 
+            onChange={handleChange} 
+          />
+          <img 
+            src={showConfirm ? eyeOpen : eyeClosed}
+            alt="Ver/Ocultar"
+            className={styles.passwordIcon}
+            onClick={() => setShowConfirm(!showConfirm)}
+          />
+        </div>
         
         {error && <p className={styles.error}>{error}</p>}
         
         <div className={styles.buttonContainer}>
           <button className={styles.button} type="submit">Registrar</button>
-
           <Link to="/login" className={styles.buttonOutline}>
             Volver a iniciar sesión
           </Link>

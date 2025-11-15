@@ -4,92 +4,124 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Usamos max-width para mantener el ancho del diseño de Figma */
   max-width: 430px; 
   margin: 0 auto;
-  padding: 0 26px; /* 26px a los lados como en tu diseño */
+  padding: 0 26px;
   box-sizing: border-box;
 }
 
 .logo {
-  /* Dimensiones del logo en tu CSS */
   width: 73px;
   height: 88.12px;
-  /* Margen superior de tu diseño */
   margin-top: 67px;
-  margin-bottom: 70px; /* Espacio antes del formulario */
+  margin-bottom: 70px;
 }
 
 .form {
   width: 100%;
-  max-width: 377px; /* Ancho de los inputs en tu diseño */
+  max-width: 377px;
   display: flex;
   flex-direction: column;
+  gap: 20px; /* <--- CAMBIO AQUÍ: Añade espacio entre CI y Contraseña */
 }
 
 .input {
   height: 42px;
-  padding: 0 16px; /* Padding interno de tu diseño */
+  padding: 0 16px;
   font-family: 'Mulish', sans-serif;
   font-size: 14px;
-  color: #333; /* Color del texto al escribir */
-  background: #F4F5F4; /* Fondo gris claro de tu diseño */
-  border-radius: 30px; /* Inputs muy redondeados */
+  color: #333;
+  background: #F4F5F4;
+  border-radius: 30px;
   border: 1px solid #F4F5F4;
   box-sizing: border-box;
 }
 
 .input::placeholder {
-  color: #737B7D; /* Color del placeholder de tu diseño */
+  color: #737B7D;
 }
 
-/* Espaciado entre los inputs */
-.input:first-of-type {
-  margin-bottom: 25px; /* Espacio entre CI y Contraseña */
-}
-
-.buttonContainer {
-  /* Espacio entre el último input y el primer botón */
-  margin-top: 150px; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px; /* Espacio entre los dos botones */
+.passwordWrapper {
+  position: relative;
   width: 100%;
 }
 
-/* Estilo base para ambos botones */
+.passwordIcon {
+  position: absolute;
+  top: 50%; /* <--- CAMBIO AQUÍ: Centrado vertical perfecto */
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
+}
+
+.input.passwordInput {
+  padding-right: 45px; /* Deja espacio para el ícono */
+}
+
+.buttonContainer {
+  margin-top: 130px; /* Ajusta el espacio después de los inputs */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
 .button,
-.buttonOutline {
-  width: 100%; /* Hacemos los botones anchos */
+.buttonOutline,
+.googleButton { /* <--- CAMBIO AQUÍ: Añade googleButton */
+  width: 100%;
   padding: 12px 18px;
   font-family: 'Mulish', sans-serif;
   font-weight: 700;
   font-size: 14px;
-  border-radius: 30px; /* Redondeados como los inputs */
+  border-radius: 30px;
   cursor: pointer;
   box-sizing: border-box;
   text-align: center;
-  text-decoration: none; /* Quita el subrayado del Link */
+  text-decoration: none;
 }
 
-/* Botón "Entrar" (Sólido) */
 .button {
   background: #3F37C9;
   color: #FFFFFF;
   border: none;
 }
 
-/* Botón "Registrar" (Contorno) */
 .buttonOutline {
   background: #FFFFFF;
   color: #3C64B1;
   border: 1px solid #4361EE;
 }
 
+.googleButton {
+  background-color: #f5f5f5;
+  color: #444;
+  border: 1px solid #ddd;
+}
+
+.link {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  color: #4361EE;
+  text-decoration: none;
+  font-size: 14px;
+}
+
 .error {
   color: red;
   font-size: 0.9em;
   text-align: center;
-  margin-top: 15px;
+}
+
+.successMessage {
+  color: green;
+  font-size: 0.9em;
+  text-align: center;
+  background-color: #e6ffed;
+  padding: 10px;
+  border-radius: 8px;
 }
