@@ -1,7 +1,7 @@
-// frontend/src/HomePage.tsx
+// frontend/src/HomePage.tsx (ACTUALIZADO)
 
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // <-- ¡Añadido Link!
 import styles from './styles/HomePage.module.css';
 import logo from './assets/logo.svg'; 
 import iconStart from './assets/start.svg'; 
@@ -10,12 +10,13 @@ import iconProfile from './assets/agenda.svg';
 
 export function HomePage() {
   const navigate = useNavigate();
-  const token = sessionStorage.getItem('authToken'); // <-- Usa sessionStorage
+  const token = sessionStorage.getItem('authToken'); 
 
   useEffect(() => {
     if (!token) {
       navigate('/login');
     }
+    // (Aquí podrías decodificar el token y si es 'admin', redirigir a '/admin/dashboard')
   }, [token, navigate]); 
 
   if (!token) {
@@ -31,6 +32,7 @@ export function HomePage() {
       </header>
 
       <main className={styles.mainContent}>
+
         <section className={styles.card}>
           <h2 className={styles.cardTitle}>¿Cómo te sientes hoy?</h2>
           <p className={styles.cardSubtitle}>
@@ -39,13 +41,18 @@ export function HomePage() {
           <button className={styles.cardButton}>Agregar informe</button>
         </section>
 
-        <section className={styles.card}>
+        {/* --- ¡CAMBIO AQUÍ! --- */}
+        {/* Ahora es un <Link> en lugar de un <button> */}
+        <Link to="/my-routine" className={styles.card} style={{textDecoration: 'none'}}>
           <h2 className={styles.cardTitle}>Ejercicios diarios</h2>
           <p className={styles.cardSubtitle}>
             Establece una rutina diaria de ejercicio para acelerar tu recuperación.
           </p>
-          <button className={styles.cardButton}>Iniciar rutina diaria</button>
-        </section>
+          {/* El botón ahora es parte del Link */}
+          <div className={styles.cardButton}>Iniciar rutina diaria</div>
+        </Link>
+        {/* --- FIN DEL CAMBIO --- */}
+
 
         <section className={styles.card}>
           <h2 className={styles.cardTitle}>Seu fisio</h2>
@@ -60,7 +67,7 @@ export function HomePage() {
       <nav className={styles.bottomNav}>
         <img src={iconStart} alt="Inicio" className={styles.navIcon} />
         <img src={iconCalendar} alt="Ejercicios" className={styles.navIcon} />
-        <img src={iconProfile} alt="Agenda" className={styles.navIcon} />
+        <img src={iconProfile} alt="Perfil" className={styles.navIcon} />
       </nav>
     </div>
   );

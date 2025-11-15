@@ -1,0 +1,129 @@
+/* frontend/src/styles/PatientRoutinePage.module.css (NUEVO) */
+
+.page {
+  max-width: 430px; 
+  margin: 0 auto;
+  padding: 0 20px 120px 20px; /* Padding extra abajo para el botón 'Iniciar' */
+  font-family: 'Mulish', sans-serif;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+}
+
+/* Cabecera con flecha */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+.backArrow {
+  width: 24px; 
+  height: 24px;
+  cursor: pointer;
+}
+.headerTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #373F41;
+  margin: 0;
+}
+
+/* Contenedor de la lista de ejercicios */
+.routineList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espacio entre tarjetas */
+}
+
+/* Estilo de la tarjeta de ejercicio (Rosa) */
+.exerciseCard {
+  /* ¡CAMBIO! Fondo rosa como en tu figma */
+  background: #fcecf5; /* Un rosa pálido similar */
+  border: 1px solid #f9d3e9;
+  
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Contenedor de la imagen del ejercicio */
+.exerciseMedia {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #f0f0f0;
+}
+.exerciseImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Detalles (Nombre, Series, Reps) */
+.exerciseDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.exerciseName {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #373F41;
+}
+.exerciseStats {
+  font-family: 'Mulish', sans-serif;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* Botón "Iniciar" (fijo abajo) */
+.startButtonContainer {
+  position: fixed; /* Se queda fijo abajo */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 430px; /* Coincide con el ancho de la página */
+  margin: 0 auto;
+  padding: 20px;
+  background: #FFFFFF;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.08);
+}
+.startButton {
+  padding: 14px 24px;
+  background: #3F37C9;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 700;
+  width: 100%;
+}
+
+/* Mensajes */
+.error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+}
+.message {
+  color: #555;
+  font-size: 16px;
+  text-align: center;
+}

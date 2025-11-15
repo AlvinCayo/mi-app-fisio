@@ -1,51 +1,62 @@
-// frontend/src/main.tsx
+// frontend/src/main.tsx (ACTUALIZADO)
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-// Importa tus páginas
-import { LoginPage } from './LoginPage'
-import { RegisterPage } from './RegisterPage'
-import { VerifyPage } from './VerifyPage'
-import { HomePage } from './HomePage'
-import { ForgotPasswordPage } from './ForgotPasswordPage'
-import { ResetPasswordPage } from './ResetPasswordPage'
-import { AuthCallbackPage } from './AuthCallbackPage'
-import { AdminDashboardPage } from './AdminDashboardPage'
-import { AdminUserListPage } from './AdminUserListPage' // <-- El menú de usuarios
+// (Importaciones de páginas existentes)
+import { LoginPage } from './LoginPage.tsx'
+import { RegisterPage } from './RegisterPage.tsx'
+import { VerifyPage } from './VerifyPage.tsx'
+import { HomePage } from './HomePage.tsx'
+import { ForgotPasswordPage } from './ForgotPasswordPage.tsx'
+import { ResetPasswordPage } from './ResetPasswordPage.tsx'
+import { AuthCallbackPage } from './AuthCallbackPage.tsx'
+import { AdminDashboardPage } from './AdminDashboardPage.tsx'
+import { AdminUserListPage } from './AdminUserListPage.tsx'
+import { AdminPendingUsersPage } from './AdminPendingUsersPage.tsx'
+import { AdminActiveUsersPage } from './AdminActiveUsersPage.tsx'
+import { AdminExerciseDashboard } from './AdminExerciseDashboard.tsx'
+import { AdminExerciseManagePage } from './AdminExerciseManagePage.tsx'
+import { AdminExerciseEditPage } from './AdminExerciseEditPage.tsx'
+import { AdminRoutineDashboard } from './AdminRoutineDashboard.tsx'
+import { AdminRoutineCreatePage } from './AdminRoutineCreatePage.tsx'
+import { AdminRoutineAssignPage } from './AdminRoutineAssignPage.tsx'
 
-// --- ¡NUEVAS PÁGINAS DE LISTAS! ---
-import { AdminPendingUsersPage } from './AdminPendingUsersPage'
-import { AdminActiveUsersPage } from './AdminActiveUsersPage'
+// --- ¡NUEVA PÁGINA DEL PACIENTE! ---
+import { PatientRoutinePage } from './PatientRoutinePage.tsx' 
 
 
 // Define las rutas
 const router = createBrowserRouter([
+  // ... (Tus rutas de /login, /register, etc. se quedan igual)
   { path: "/login", element: <LoginPage /> },
   { path: "/register", element: <RegisterPage /> },
   { path: "/verify", element: <VerifyPage /> },
-  { path: "/", element: <HomePage /> },
+  
+  // --- RUTAS DE PACIENTE ---
+  { path: "/", element: <HomePage /> }, // El dashboard del paciente
+  {
+    path: "/my-routine", // <-- ¡NUEVA RUTA!
+    element: <PatientRoutinePage />,
+  },
+
+  // ... (Tus rutas /forgot-password y /auth/callback se quedan igual)
   { path: "/forgot-password", element: <ForgotPasswordPage /> },
   { path: "/reset-password", element: <ResetPasswordPage /> },
   { path: "/auth/callback", element: <AuthCallbackPage /> },
-  {
-    path: "/admin/dashboard",
-    element: <AdminDashboardPage />,
-  },
-  {
-    path: "/admin/users",
-    element: <AdminUserListPage />,
-  },
-  // --- ¡NUEVAS RUTAS DE ADMIN! ---
-  {
-    path: "/admin/users/pending",
-    element: <AdminPendingUsersPage />,
-  },
-  {
-    path: "/admin/users/manage", // <-- Corregido de 'active' a 'manage'
-    element: <AdminActiveUsersPage />,
-  },
+  
+  // --- Rutas de Administrador ---
+  { path: "/admin/dashboard", element: <AdminDashboardPage /> },
+  { path: "/admin/users", element: <AdminUserListPage /> },
+  { path: "/admin/users/pending", element: <AdminPendingUsersPage /> },
+  { path: "/admin/users/manage", element: <AdminActiveUsersPage /> },
+  { path: "/admin/exercises", element: <AdminExerciseDashboard /> },
+  { path: "/admin/exercises/manage", element: <AdminExerciseManagePage /> },
+  { path: "/admin/exercises/edit/:id", element: <AdminExerciseEditPage /> },
+  { path: "/admin/routines", element: <AdminRoutineDashboard /> },
+  { path: "/admin/routines/create", element: <AdminRoutineCreatePage /> },
+  { path: "/admin/routines/assign", element: <AdminRoutineAssignPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

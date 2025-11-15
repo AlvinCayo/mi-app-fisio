@@ -1,0 +1,79 @@
+/* frontend/src/styles/AdminExerciseDashboard.module.css (NUEVO) */
+
+.page {
+  max-width: 430px; 
+  min-height: 100vh; 
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  padding: 0 20px 20px 20px;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+.backArrow {
+  width: 24px; 
+  height: 24px;
+  cursor: pointer;
+}
+
+.headerTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #373F41;
+  margin: 0;
+}
+
+.mainContent {
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background: rgba(72, 149, 239, 0.06);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.cardTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: #373F41;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cardSubtitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #737B7D;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+}

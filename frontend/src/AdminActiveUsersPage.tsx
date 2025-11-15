@@ -27,10 +27,10 @@ export function AdminActiveUsersPage() {
   const navigate = useNavigate();
   const token = sessionStorage.getItem('authToken');
 
+  // Llama al endpoint que trae activos E inactivos
   const fetchAllPatients = useCallback(async () => {
     if (!token) return;
     try {
-      // Esta URL ahora solo trae pacientes 'activos' e 'inactivos'
       const response = await axios.get('http://localhost:3000/api/admin/active-users', {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -47,17 +47,12 @@ export function AdminActiveUsersPage() {
     }
     try {
       const decodedToken = jwtDecode<DecodedToken>(token);
-      if (decodedToken.role !== 'admin') {
-         navigate('/');
-         return;
-      }
-      
-      fetchAllPatients(); 
-
+      if (decodedToken.role !== 'admin') navigate('/');
     } catch (e) {
       navigate('/login');
     }
     
+    fetchAllPatients();
   }, [token, navigate, fetchAllPatients]);
 
   const handleActivate = useCallback(async (userId: number) => {
@@ -66,7 +61,6 @@ export function AdminActiveUsersPage() {
       return;
     }
     try {
-      // (Usamos el endpoint 'approve' que pone el status en 'activo')
       await axios.post(`http://localhost:3000/api/admin/users/${userId}/approve`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -93,7 +87,6 @@ export function AdminActiveUsersPage() {
     }
   }, [token, fetchAllPatients]);
 
-  // Función para capitalizar
   const capitalize = (s: string) => {
     if (typeof s !== 'string') return '';
     return s.charAt(0).toUpperCase() + s.slice(1);
@@ -141,8 +134,8 @@ export function AdminActiveUsersPage() {
                   </td>
 
                   <td>
-                    {/* --- ¡LÓGICA SIMPLIFICADA! --- 
-                       Ya no muestra usuarios 'pendientes'
+                    {/* --- ¡LÓGICA REVERTIDA! --- 
+                       Ahora muestra el botón correcto según el estado
                     */}
                     {user.status === 'activo' ? (
                       <button 

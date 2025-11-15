@@ -1,0 +1,191 @@
+/* frontend/src/styles/AdminExerciseEditPage.module.css */
+
+.page {
+  max-width: 430px; 
+  margin: 0 auto;
+  padding: 0 20px 20px 20px; 
+  font-family: 'Mulish', sans-serif;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+}
+
+/* Cabecera: "Editar Ejercicio" (Tamaño: 20px) */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+.backArrow {
+  width: 24px; 
+  height: 24px;
+  cursor: pointer;
+}
+.headerTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #373F41;
+  margin: 0;
+}
+
+/* Subtítulo: "Editando: Agacharse" (Tamaño: 19px) */
+.pageTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  color: #373F41;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Formulario de Edición */
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  background: #f8f9fa;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+}
+.input,
+.textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  color: #333; 
+  background: #FFFFFF;
+  border-radius: 30px; 
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+.input::placeholder,
+.textarea::placeholder {
+  color: #737B7D;
+}
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+  border-radius: 16px;
+}
+
+/* Label: "Subir Nuevo Tutorial..." (Tamaño: 16px) */
+.fileInputLabelText {
+  font-family: 'Mulish', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #373F41;
+  width: 100%;
+  text-align: center;
+}
+.fileInputWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+/* Botón: "Elegir archivo" (Tamaño: 14px) */
+.fileInputLabel {
+  padding: 8px 24px;
+  background: #FFFFFF;
+  border: 1px solid #4361EE; /* Azul */
+  color: #4361EE; /* Azul */
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  margin-top: 5px;
+}
+.fileInputLabel:hover {
+  background: rgba(67, 97, 238, 0.05);
+}
+/* Texto: "Manteniendo el archivo..." (Tamaño: 12px) */
+.fileName {
+  font-size: 12px;
+  color: #555;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.hiddenInput {
+  display: none;
+}
+/* Botón: "Guardar Cambios" (Tamaño: 16px) */
+.button {
+  padding: 14px 24px;
+  background: #3F37C9; /* Morado principal */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 700;
+  width: 100%;
+}
+.button:disabled {
+  background: #aaa;
+}
+
+/* Previsualización de medios existentes */
+.currentMediaContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  background: #f0f0f0;
+}
+/* Label: "Tutorial Actual:" (Tamaño: 14px) */
+.currentMediaLabel {
+  font-weight: 600;
+  font-size: 14px;
+  color: #555;
+}
+.currentMedia {
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 6px;
+  object-fit: contain;
+  background: #fff;
+  padding: 5px;
+  border: 1px solid #eee;
+}
+/* Botón: "Quitar Tutorial" (Tamaño: 12px) */
+.removeMediaButton {
+  background: #dc3545; /* Rojo */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.removeMediaButton:hover {
+  background: #c82333;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}
+.message {
+  color: green;
+  font-size: 14px;
+}

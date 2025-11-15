@@ -1,0 +1,153 @@
+/* frontend/src/styles/AdminRoutineDashboard.module.css (NUEVO) */
+
+.page {
+  max-width: 430px; 
+  margin: 0 auto;
+  padding: 0 20px 20px 20px; 
+  font-family: 'Mulish', sans-serif;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+}
+
+/* Cabecera */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+.backArrow {
+  width: 24px; 
+  height: 24px;
+  cursor: pointer;
+}
+.headerTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #373F41;
+  margin: 0;
+}
+
+/* Título de la página */
+.pageTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  color: #373F41;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* Botón "Crear Nueva Rutina" */
+.createButton {
+  padding: 14px 24px;
+  background: #3F37C9; /* Color principal de acción */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 700;
+  width: 100%;
+  margin-bottom: 25px;
+  transition: background 0.2s;
+}
+.createButton:hover {
+  background: #322c9e;
+}
+.createButton:disabled {
+  background: #aaa;
+}
+
+/* Lista de Rutinas */
+.routineList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.routineItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.routineName {
+  font-weight: 700;
+  font-size: 18px;
+  color: #373F41;
+  flex-grow: 1; /* Permite que el nombre ocupe el espacio disponible */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Contenedor para los botones de acción (Editar/Borrar) */
+.buttonActions {
+  display: flex;
+  flex-direction: column; /* Apila los botones verticalmente */
+  gap: 8px;
+  flex-shrink: 0; /* Evita que los botones se encojan */
+  margin-left: 15px; /* Espacio entre el nombre y los botones */
+}
+
+/* Estilo base para los botones de acción */
+.actionButton {
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 30px; 
+  font-weight: 700;
+  font-size: 12px;
+  width: 90px; /* Ancho fijo para ambos */
+  text-align: center;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+
+/* Botón Editar (como "Entrar" o el principal de crear rutina) */
+.editButton {
+  composes: actionButton;
+  background: #3F37C9;
+  color: white;
+  border: 1px solid #3F37C9;
+}
+.editButton:hover {
+  background: #322c9e;
+}
+
+/* Botón Borrar (como "Registrar" o el botón de borrar ejercicios) */
+.deleteButton {
+  composes: actionButton;
+  background: #FFFFFF;
+  color: #4361EE;
+  border: 1px solid #4361EE;
+}
+.deleteButton:hover {
+  background: #f8f9fa;
+}
+
+/* Mensajes de error y éxito */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.message {
+  color: green;
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-align: center;
+}

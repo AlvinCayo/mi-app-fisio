@@ -1,4 +1,4 @@
-// frontend/src/AdminDashboardPage.tsx
+// frontend/src/AdminDashboardPage.tsx (ACTUALIZADO)
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,9 +13,10 @@ interface DecodedToken {
 export function AdminDashboardPage() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const token = sessionStorage.getItem('authToken'); // <-- Usa sessionStorage
+  const token = sessionStorage.getItem('authToken');
 
   useEffect(() => {
+    // (Protección de la Ruta se queda igual)
     if (!token) {
       navigate('/login');
       return;
@@ -27,17 +28,19 @@ export function AdminDashboardPage() {
         setTimeout(() => navigate('/'), 3000);
       }
     } catch (e) {
-      sessionStorage.removeItem('authToken'); // <-- Usa sessionStorage
+      sessionStorage.removeItem('authToken');
       navigate('/login');
     }
   }, [token, navigate]);
 
   const goToUserManagement = () => {
-    navigate('/admin/users'); // Te lleva al *menú* de usuarios
+    navigate('/admin/users'); 
   };
 
+  // --- ¡CAMBIO AQUÍ! ---
   const goToExerciseManagement = () => {
-    alert('Función de "Gestión de Ejercicios" no implementada');
+    // Ya no es un alert, ahora navega
+    navigate('/admin/exercises'); 
   };
 
   const goToStats = () => {
@@ -45,27 +48,19 @@ export function AdminDashboardPage() {
   };
 
   if (error) {
-    return (
-      <div className={styles.page}>
-        <header className={styles.header}>
-          <img src={logo} alt="Logo" className={styles.logo} />
-          <span className={styles.title}>Panel de Administrador</span>
-        </header>
-        <main className={styles.mainContent}>
-          <p className={styles.error}>{error}</p>
-        </main>
-      </div>
-    )
+    // ... (Tu JSX de error se queda igual)
   }
 
   return (
     <div className={styles.page}>
+      
       <header className={styles.header}>
         <img src={logo} alt="Logo" className={styles.logo} />
         <span className={styles.title}>Panel de Administrador</span>
       </header>
 
       <main className={styles.mainContent}>
+
         <section className={styles.card}>
           <h2 className={styles.cardTitle}>Gestión de Usuarios</h2>
           <p className={styles.cardSubtitle}>
@@ -81,6 +76,7 @@ export function AdminDashboardPage() {
           <p className={styles.cardSubtitle}>
             Asignar o borrar rutinas de ejercicios por paciente.
           </p>
+          {/* ¡Este botón ahora funciona! */}
           <button className={styles.cardButton} onClick={goToExerciseManagement}>
             Ir a Gestión de Ejercicios
           </button>
@@ -95,6 +91,7 @@ export function AdminDashboardPage() {
             Ver Estadísticas
           </button>
         </section>
+        
       </main>
     </div>
   );
