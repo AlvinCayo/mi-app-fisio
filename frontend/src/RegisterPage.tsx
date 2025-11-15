@@ -1,8 +1,10 @@
-// frontend/src/RegisterPage.tsx
+// frontend/src/RegisterPage.tsx (CORREGIDO)
 
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+
+// Importa estilos y assets
 import styles from './styles/RegisterPage.module.css';
 import logo from './assets/logo.svg';
 import eyeOpen from './assets/eye-open.svg';
@@ -10,8 +12,7 @@ import eyeClosed from './assets/eye-closed.svg';
 
 export function RegisterPage() {
   
-  // --- ¡CORRECCIÓN AQUÍ! ---
-  // Inicializa el estado con el objeto completo
+  // ¡CORREGIDO! Inicializa el estado con el objeto completo
   const [formData, setFormData] = useState({
     nombreCompleto: '',
     ci: '',
@@ -20,11 +21,11 @@ export function RegisterPage() {
     password: '',
     confirmPassword: ''
   });
-  // -------------------------
   
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Estados para los íconos de los ojos
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -36,15 +37,13 @@ export function RegisterPage() {
     e.preventDefault();
     setError('');
     
-    // Estas líneas ahora funcionarán porque formData tiene las propiedades
     if (formData.password !== formData.confirmPassword) {
       setError('Las contraseñas no coinciden');
       return;
     }
     
     try {
-      // --- ¡CORRECCIÓN AQUÍ! ---
-      // Pasa el objeto de datos completo, no solo "..."
+      // ¡CORREGIDO! Pasa el objeto de datos completo
       await axios.post('http://localhost:3000/api/auth/register', {
         nombreCompleto: formData.nombreCompleto,
         ci: formData.ci,
@@ -52,7 +51,6 @@ export function RegisterPage() {
         email: formData.email,
         password: formData.password
       });
-      // -------------------------
 
       navigate(`/verify?email=${formData.email}`); 
 
@@ -66,11 +64,14 @@ export function RegisterPage() {
       <img src={logo} alt="Logo" className={styles.logo} /> 
       
       <form className={styles.form} onSubmit={handleSubmit}>
+        
+        {/* Inputs de texto normales */}
         <input className={styles.input} name="nombreCompleto" placeholder="Nombre Completo" onChange={handleChange} />
         <input className={styles.input} name="ci" placeholder="CI" onChange={handleChange} />
         <input className={styles.input} name="telefono" placeholder="Telefono" onChange={handleChange} />
         <input className={styles.input} name="email" type="email" placeholder="Email" onChange={handleChange} />
 
+        {/* --- ESTRUCTURA CORREGIDA (Contraseña 1) --- */}
         <div className={styles.passwordWrapper}>
           <input 
             className={`${styles.input} ${styles.passwordInput}`}
@@ -87,6 +88,7 @@ export function RegisterPage() {
           />
         </div>
 
+        {/* --- ESTRUCTURA CORREGIDA (Contraseña 2) --- */}
         <div className={styles.passwordWrapper}>
           <input 
             className={`${styles.input} ${styles.passwordInput}`}

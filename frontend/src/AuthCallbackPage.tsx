@@ -6,11 +6,8 @@ import { jwtDecode } from 'jwt-decode';
 
 // Define el tipo para el token decodificado
 interface DecodedToken {
-  userId: number;
-  ci: string;
   role: 'admin' | 'paciente';
-  iat: number;
-  exp: number;
+  // ... (añade otros campos)
 }
 
 export function AuthCallbackPage() {

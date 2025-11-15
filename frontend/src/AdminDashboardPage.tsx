@@ -4,14 +4,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import styles from './styles/AdminDashboard.module.css';
 
 // Define el tipo para el token decodificado
 interface DecodedToken {
-  userId: number;
-  ci: string;
   role: 'admin' | 'paciente';
-  iat: number;
-  exp: number;
+  // ... (añade otros campos)
 }
 
 // Define el tipo para un usuario pendiente
@@ -60,7 +58,7 @@ export function AdminDashboardPage() {
       }
     };
     
-    fetchPendingUsers();
+    if (token) fetchPendingUsers();
   }, [token, navigate]);
 
   // --- 3. Funciones para aprobar o desactivar ---
@@ -70,7 +68,6 @@ export function AdminDashboardPage() {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage('Usuario aprobado con éxito.');
-      // Quita al usuario de la lista
       setUsers(users.filter(user => user.id !== userId));
     } catch (err: any) {
       setError(err.response?.data?.error || 'Error al aprobar.');
@@ -91,33 +88,33 @@ export function AdminDashboardPage() {
 
 
   return (
-    <div style={{ fontFamily: 'Arial', padding: '20px' }}>
-      <h1>Panel de Administrador (Fisioterapeuta)</h1>
-      {error && <p style={{color: 'red'}}>{error}</p>}
-      {message && <p style={{color: 'green'}}>{message}</p>}
+    <div className={styles.container}>
+      <h1 className={styles.title}>Panel de Administrador (Fisioterapeuta)</h1>
+      {error && <p className={styles.error}>{error}</p>}
+      {message && <p className={styles.message}>{message}</p>}
 
-      <h2>Usuarios Pendientes de Aprobación</h2>
+      <h2 style={{marginTop: '40px'}}>Usuarios Pendientes de Aprobación</h2>
       {users.length === 0 ? (
         <p>No hay usuarios pendientes.</p>
       ) : (
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <table className={styles.table}>
           <thead>
-            <tr style={{ background: '#f4f4f4' }}>
-              <th style={{padding: '8px', border: '1px solid #ddd'}}>Nombre</th>
-              <th style={{padding: '8px', border: '1px solid #ddd'}}>Email</th>
-              <th style={{padding: '8px', border: '1px solid #ddd'}}>CI</th>
-              <th style={{padding: '8px', border: '1px solid #ddd'}}>Acciones</th>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>CI</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {users.map(user => (
               <tr key={user.id}>
-                <td style={{padding: '8px', border: '1px solid #ddd'}}>{user.nombre_completo}</td>
-                <td style={{padding: '8px', border: '1px solid #ddd'}}>{user.email}</td>
-                <td style={{padding: '8px', border: '1px solid #ddd'}}>{user.ci}</td>
-                <td style={{padding: '8px', border: '1px solid #ddd'}}>
-                  <button onClick={() => handleApprove(user.id)} style={{background: 'green', color: 'white', border: 'none', padding: '5px', cursor: 'pointer'}}>Aprobar</button>
-                  <button onClick={() => handleDeactivate(user.id)} style={{background: 'red', color: 'white', border: 'none', padding: '5px', cursor: 'pointer', marginLeft: '5px'}}>Rechazar</button>
+                <td>{user.nombre_completo}</td>
+                <td>{user.email}</td>
+                <td>{user.ci}</td>
+                <td>
+                  <button onClick={() => handleApprove(user.id)} className={`${styles.button} ${styles.approveButton}`}>Aprobar</button>
+                  <button onClick={() => handleDeactivate(user.id)} className={`${styles.button} ${styles.deactivateButton}`}>Rechazar</button>
                 </td>
               </tr>
             ))}

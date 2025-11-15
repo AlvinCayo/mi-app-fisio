@@ -1,4 +1,4 @@
-/* frontend/src/styles/LoginPage.module.css */
+/* frontend/src/styles/LoginPage.module.css (CORREGIDO) */
 
 .container {
   display: flex;
@@ -6,26 +6,28 @@
   align-items: center;
   max-width: 430px; 
   margin: 0 auto;
-  padding: 0 26px;
+  padding: 0 26px; 
   box-sizing: border-box;
 }
 
 .logo {
   width: 73px;
   height: 88.12px;
-  margin-top: 67px;
+  margin-top: 67px; 
   margin-bottom: 70px;
 }
 
 .form {
   width: 100%;
-  max-width: 377px;
+  max-width: 377px; /* Ancho de los inputs */
   display: flex;
   flex-direction: column;
-  gap: 20px; /* <--- CAMBIO AQUÍ: Añade espacio entre CI y Contraseña */
+  gap: 25px; /* Espacio entre CI y Contraseña */
 }
 
+/* --- ¡CORRECCIÓN AQUÍ! --- */
 .input {
+  width: 100%; /* <-- 1. ASEGURA QUE EL INPUT DE 'CI' OCUPE EL 100% */
   height: 42px;
   padding: 0 16px;
   font-family: 'Mulish', sans-serif;
@@ -36,20 +38,24 @@
   border: 1px solid #F4F5F4;
   box-sizing: border-box;
 }
+/* ------------------------- */
 
 .input::placeholder {
   color: #737B7D;
 }
 
+/* --- ¡CORRECCIÓN AQUÍ! --- */
+/* 1. El 'div' que envuelve el input y el ícono */
 .passwordWrapper {
-  position: relative;
-  width: 100%;
+  position: relative; 
+  width: 100%; /* <-- 2. ASEGURA QUE EL WRAPPER OCUPE EL 100% */
 }
 
+/* 2. El ícono del ojo */
 .passwordIcon {
   position: absolute;
-  top: 50%; /* <--- CAMBIO AQUÍ: Centrado vertical perfecto */
-  right: 15px;
+  top: 50%;
+  right: 16px; 
   transform: translateY(-50%);
   cursor: pointer;
   width: 20px;
@@ -57,22 +63,30 @@
   filter: invert(50%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%) contrast(90%);
 }
 
+/* 3. El input de contraseña */
 .input.passwordInput {
+  /* ¡Importante! El input de adentro también debe ser 100% */
+  width: 100%; 
   padding-right: 45px; /* Deja espacio para el ícono */
 }
+/* --- FIN DE LA CORRECCIÓN --- */
+
 
 .buttonContainer {
-  margin-top: 130px; /* Ajusta el espacio después de los inputs */
+  margin-top: 130px; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 18px; 
   width: 100%;
 }
 
+/* (El resto del CSS de .button, .link, etc. es el mismo) */
+/* ... pega el resto de tu CSS de botones y links aquí ... */
+
 .button,
 .buttonOutline,
-.googleButton { /* <--- CAMBIO AQUÍ: Añade googleButton */
+.googleButton {
   width: 100%;
   padding: 12px 18px;
   font-family: 'Mulish', sans-serif;

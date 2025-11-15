@@ -5,14 +5,16 @@ import axios from 'axios';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
+// Importa los estilos y assets
 import styles from './styles/LoginPage.module.css';
 import logo from './assets/logo.svg';
 import eyeOpen from './assets/eye-open.svg';
 import eyeClosed from './assets/eye-closed.svg';
 
+// Interfaz para decodificar el token
 interface DecodedToken {
   role: 'admin' | 'paciente';
-  // ...
+  // ... (añade otros campos del token si los necesitas)
 }
 
 export function LoginPage() {
@@ -23,45 +25,68 @@ export function LoginPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  // Estado para el ícono del ojo
   const [showPassword, setShowPassword] = useState(false);
 
+  // Lee mensajes de la URL (ej. de Google o Verificación)
   useEffect(() => {
     const status = searchParams.get('status');
+    const errorMsg = searchParams.get('error');
+    
     if (status === 'pending') {
-      setSuccess("¡Gracias! Tu cuenta está pendiente de aprobación.");
+      setSuccess("¡Gracias por registrarte! Tu cuenta está pendiente de aprobación por un administrador.");
+    }
+    if (status === 'inactive') {
+      setError("Tu cuenta ha sido desactivada por un administrador.");
+    }
+    if (errorMsg === 'google-auth-failed') {
+      setError("Error al iniciar sesión con Google.");
     }
   }, [searchParams]);
 
+  // Manejador para el login local
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setSuccess('');
+
     try {
       const response = await axios.post('http://localhost:3000/api/auth/login', {
         ci: ci,
         password: password
       });
-      localStorage.setItem('authToken', response.data.token);
-      const decodedToken = jwtDecode<DecodedToken>(response.data.token);
+
+      const token = response.data.token;
+      localStorage.setItem('authToken', token);
+      
+      const decodedToken = jwtDecode<DecodedToken>(token);
+
+      // Redirige según el rol
       if (decodedToken.role === 'admin') {
         navigate('/admin/dashboard');
       } else {
-        navigate('/');
+        navigate('/'); // Redirige al paciente al home
       }
-    } catch (err: any) {
+
+    } catch (err: any)
+      {
       setError(err.response?.data?.error || 'Error al iniciar sesión.');
     }
   };
 
+  // Manejador para el login con Google
   const handleGoogleLogin = () => {
+    // Redirige al backend para iniciar el flujo de Google
     window.location.href = 'http://localhost:3000/api/auth/google';
   };
 
   return (
     <div className={styles.container}>
+      
       <img src={logo} alt="Logo" className={styles.logo} /> 
       
       <form className={styles.form} onSubmit={handleSubmit}>
+        
         <input 
           className={styles.input} 
           name="ci" 
@@ -73,7 +98,7 @@ export function LoginPage() {
           <input 
             className={`${styles.input} ${styles.passwordInput}`}
             name="password" 
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? "text" : "password"} // Tipo dinámico
             placeholder="Contraseña" 
             onChange={(e) => setPassword(e.target.value)} 
           />
@@ -81,7 +106,7 @@ export function LoginPage() {
             src={showPassword ? eyeOpen : eyeClosed}
             alt="Ver/Ocultar contraseña"
             className={styles.passwordIcon}
-            onClick={() => setShowPassword(!showPassword)}
+            onClick={() => setShowPassword(!showPassword)} // El toggle
           />
         </div>
         

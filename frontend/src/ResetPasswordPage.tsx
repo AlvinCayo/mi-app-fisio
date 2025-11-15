@@ -1,10 +1,11 @@
-// frontend/src/ResetPasswordPage.tsx
+// frontend/src/ResetPasswordPage.tsx (CORREGIDO)
 
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-// --- ¡CAMBIO! Reutilizamos el estilo de Login ---
-import styles from './styles/LoginPage.module.css'; 
+
+// Importa estilos y assets
+import styles from './styles/ResetPasswordPage.module.css'; 
 import logo from './assets/logo.svg';
 import eyeOpen from './assets/eye-open.svg';
 import eyeClosed from './assets/eye-closed.svg';
@@ -20,27 +21,33 @@ export function ResetPasswordPage() {
   
   const email = searchParams.get('email');
 
-  // --- ¡NUEVO ESTADO! ---
+  // Estados para los íconos
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    // ... (tu lógica de handleSubmit se queda igual) ...
     e.preventDefault();
     setError('');
     setSuccess('');
+
     if (newPassword !== confirmPassword) {
       setError("Las nuevas contraseñas no coinciden.");
       return;
     }
+
     try {
       const response = await axios.post('http://localhost:3000/api/auth/reset-password', {
         email: email,
         codigo_sms: codigo,
         newPassword: newPassword
       });
+      
       setSuccess(response.data.message + " Redirigiendo al login...");
-      setTimeout(() => navigate('/login'), 3000);
+
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000);
+
     } catch (err: any) {
       setError(err.response?.data?.error || 'Error en el servidor.');
     }
@@ -50,9 +57,13 @@ export function ResetPasswordPage() {
     <div className={styles.container}>
       <img src={logo} alt="Logo" className={styles.logo} />
       <h2 className={styles.title}>Nueva Contraseña</h2>
-      <p style={{textAlign: 'center', color: '#555'}}>Revisa tu email ({email}) por el código.</p>
+      <p className={styles.subtitle}>
+        Revisa tu email (<strong>{email || "..."}</strong>) por el código.
+      </p>
       
       <form className={styles.form} onSubmit={handleSubmit}>
+        
+        {/* Input del Código */}
         <input 
           className={styles.input} 
           name="codigo"
@@ -60,7 +71,7 @@ export function ResetPasswordPage() {
           onChange={(e) => setCodigo(e.target.value)} 
         />
         
-        {/* --- CAMBIO AQUÍ: Contraseña 1 --- */}
+        {/* --- ESTRUCTURA CORREGIDA (Contraseña 1) --- */}
         <div className={styles.passwordWrapper}>
           <input 
             className={`${styles.input} ${styles.passwordInput}`}
@@ -77,7 +88,7 @@ export function ResetPasswordPage() {
           />
         </div>
         
-        {/* --- CAMBIO AQUÍ: Contraseña 2 --- */}
+        {/* --- ESTRUCTURA CORREGIDA (Contraseña 2) --- */}
         <div className={styles.passwordWrapper}>
           <input 
             className={`${styles.input} ${styles.passwordInput}`}
@@ -94,9 +105,11 @@ export function ResetPasswordPage() {
           />
         </div>
         
+        {/* Mensajes de estado */}
         {error && <p className={styles.error}>{error}</p>}
         {success && <p className={styles.successMessage}>{success}</p>}
         
+        {/* Contenedor de Botones */}
         <div className={styles.buttonContainer}>
           <button className={styles.button} type="submit">Actualizar Contraseña</button>
           <Link to="/login" className={styles.link}>Volver a Iniciar Sesión</Link>

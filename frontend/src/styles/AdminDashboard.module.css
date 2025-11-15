@@ -1,0 +1,60 @@
+/* frontend/src/styles/AdminDashboard.module.css */
+.container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+.title {
+  color: #333;
+}
+
+.error {
+  color: red;
+  background: #ffe6e6;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.message {
+  color: green;
+  background: #e6ffed;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f4f4f4;
+}
+
+.button {
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.approveButton {
+  background-color: #28a745; /* Verde */
+}
+
+.deactivateButton {
+  background-color: #dc3545; /* Rojo */
+  margin-left: 5px;
+}

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './styles/LoginPage.module.css'; // Reutilizamos el estilo de Login
+import logo from './assets/logo.svg';
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -32,8 +33,9 @@ export function ForgotPasswordPage() {
 
   return (
     <div className={styles.container}>
+      <img src={logo} alt="Logo" className={styles.logo} />
       <h2 className={styles.title}>Recuperar Contraseña</h2>
-      <p style={{textAlign: 'center', color: '#555'}}>Ingresa tu email y te enviaremos un código.</p>
+      <p style={{textAlign: 'center', color: '#555', marginTop: 0}}>Ingresa tu email y te enviaremos un código.</p>
       
       <form className={styles.form} onSubmit={handleSubmit}>
         <input 
@@ -47,7 +49,7 @@ export function ForgotPasswordPage() {
         {error && <p className={styles.error}>{error}</p>}
         {success && <p className={styles.successMessage}>{success}</p>}
         
-        <div className={styles.buttonContainer}>
+        <div className={styles.buttonContainer} style={{marginTop: '20px'}}>
           <button className={styles.button} type="submit">Enviar Código</button>
           <Link to="/login" className={styles.link}>Volver a Iniciar Sesión</Link>
         </div>

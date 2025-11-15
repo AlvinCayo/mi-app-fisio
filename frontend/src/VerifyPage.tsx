@@ -52,7 +52,6 @@ export function VerifyPage() {
   };
 
   const handleResendCode = async () => {
-    // ... (Tu función de handleResendCode se queda igual)
     if (!email || isResending || cooldown > 0) return;
     setIsResending(true);
     setError('');
