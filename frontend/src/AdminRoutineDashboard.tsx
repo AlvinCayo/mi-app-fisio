@@ -1,22 +1,24 @@
-// frontend/src/AdminRoutineDashboard.tsx (NUEVO)
+// frontend/src/AdminRoutineDashboard.tsx (ACTUALIZADO)
 
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import styles from './styles/AdminRoutineDashboard.module.css'; // Nuevo CSS para el dashboard de rutinas
+import styles from './styles/AdminRoutineDashboard.module.css';
 import backArrow from './assets/back-arrow.svg'; 
 
-// Definición de tipos para la autenticación
+// (Tipos se quedan igual)
 interface DecodedToken {
   role: 'admin' | 'paciente';
 }
-
-// Definición de tipo para una rutina
+interface ExercisePreview {
+  nombre: string;
+}
 interface Routine {
   id: number;
-  name: string;
-  // Añadiremos más propiedades cuando tengamos el backend, como los ejercicios en la rutina
+  nombre: string;
+  descripcion: string;
+  ejercicios: ExercisePreview[] | null;
 }
 
 export function AdminRoutineDashboard() {
@@ -26,23 +28,14 @@ export function AdminRoutineDashboard() {
   const navigate = useNavigate();
   const token = sessionStorage.getItem('authToken');
 
-  // Función para cargar las rutinas (vacía por ahora, se conectará al backend)
+  // (fetchRoutines y useEffect se quedan igual)
   const fetchRoutines = useCallback(async () => {
     if (!token) return;
     try {
-      // TODO: Implementar llamada real al backend para obtener las rutinas
-      // const response = await axios.get('http://localhost:3000/api/admin/routines', {
-      //   headers: { Authorization: `Bearer ${token}` }
-      // });
-      // setRoutines(response.data);
-
-      // Datos de ejemplo para que veas algo
-      setRoutines([
-        { id: 1, name: 'Rutina de Fuerza Básica' },
-        { id: 2, name: 'Rutina de Recuperación de Rodilla' },
-        { id: 3, name: 'Rutina Cardio Suave' },
-      ]);
-
+      const response = await axios.get('http://localhost:3000/api/admin/routines', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setRoutines(response.data);
       setError('');
     } catch (err: any) {
       setError(err.response?.data?.error || 'Error al cargar las rutinas.');
@@ -50,7 +43,6 @@ export function AdminRoutineDashboard() {
   }, [token]);
 
   useEffect(() => {
-    // Protección de la Ruta para Admin
     if (!token) {
       navigate('/login');
       return;
@@ -58,11 +50,11 @@ export function AdminRoutineDashboard() {
     try {
       const decodedToken = jwtDecode<DecodedToken>(token);
       if (decodedToken.role !== 'admin') {
-        navigate('/'); // Redirigir si no es admin
+        navigate('/');
         return;
       }
     } catch (e) {
-      sessionStorage.removeItem('authToken'); // Token inválido
+      sessionStorage.removeItem('authToken');
       navigate('/login');
       return;
     }
@@ -72,25 +64,27 @@ export function AdminRoutineDashboard() {
 
 
   const handleCreateRoutine = () => {
-    navigate('/admin/routines/create'); // Navega a la página de creación
+    navigate('/admin/routines/create');
   };
 
+  // --- ¡CAMBIO AQUÍ! ---
+  // El botón "Editar" ahora navega a la página de edición
   const handleEditRoutine = (routineId: number) => {
-    // TODO: Implementar la navegación a una página de edición de rutina
-    alert(`Editar rutina ${routineId} - No implementado`);
+    navigate(`/admin/routines/edit/${routineId}`);
   };
+  // ---------------------
 
+  // (handleDeleteRoutine se queda igual)
   const handleDeleteRoutine = async (routineId: number) => {
-    if (!token || !window.confirm(`¿Estás seguro de que quieres borrar la rutina ${routineId}?`)) {
+    if (!token || !window.confirm(`¿Estás seguro de que quieres borrar esta rutina?`)) {
       return;
     }
     try {
-      // TODO: Implementar llamada real al backend para borrar una rutina
-      // await axios.delete(`http://localhost:3000/api/admin/routines/${routineId}`, {
-      //   headers: { Authorization: `Bearer ${token}` }
-      // });
-      setMessage('Rutina eliminada con éxito (simulado).');
-      setRoutines(prev => prev.filter(r => r.id !== routineId)); // Actualiza la UI
+      await axios.delete(`http://localhost:3000/api/admin/routines/${routineId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setMessage('Rutina eliminada con éxito.');
+      setRoutines(prev => prev.filter(r => r.id !== routineId));
       setError('');
     } catch (err: any) {
       setError(err.response?.data?.error || 'Error al eliminar la rutina.');
@@ -105,7 +99,7 @@ export function AdminRoutineDashboard() {
           src={backArrow} 
           alt="Volver" 
           className={styles.backArrow}
-          onClick={() => navigate('/admin/dashboard')} // Vuelve al dashboard de admin
+          onClick={() => navigate('/admin/exercises')}
         />
         <h1 className={styles.headerTitle}>Gestionar Rutinas</h1>
       </header>
@@ -127,21 +121,34 @@ export function AdminRoutineDashboard() {
           <p>No hay rutinas creadas.</p>
         ) : (
           routines.map(routine => (
-            <div key={routine.id} className={styles.routineItem}>
-              <span className={styles.routineName}>{routine.name}</span>
-              <div className={styles.buttonActions}>
-                <button 
-                  onClick={() => handleEditRoutine(routine.id)}
-                  className={styles.editButton}
-                >
-                  Editar
-                </button>
-                <button 
-                  onClick={() => handleDeleteRoutine(routine.id)}
-                  className={styles.deleteButton}
-                >
-                  Borrar
-                </button>
+            <div key={routine.id} className={styles.routineCard}>
+              <div className={styles.routineHeader}>
+                <h3 className={styles.routineName}>{routine.nombre}</h3>
+                
+                <div className={styles.buttonActions}>
+                  <button 
+                    onClick={() => handleEditRoutine(routine.id)}
+                    className={styles.editButton}
+                  >
+                    Editar
+                  </button>
+                  <button 
+                    onClick={() => handleDeleteRoutine(routine.id)}
+                    className={styles.deleteButton}
+                  >
+                    Borrar
+                  </button>
+                </div>
+              </div>
+              <div className={styles.exerciseList}>
+                <span className={styles.exerciseListTitle}>Ejercicios:</span>
+                {(!routine.ejercicios || routine.ejercicios.length === 0) ? (
+                  <span className={styles.exerciseItem}>- Vacía -</span>
+                ) : (
+                  routine.ejercicios.map((ex, index) => (
+                    <span key={index} className={styles.exerciseItem}>- {ex.nombre}</span>
+                  ))
+                )}
               </div>
             </div>
           ))

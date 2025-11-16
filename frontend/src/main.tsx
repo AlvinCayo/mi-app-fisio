@@ -1,10 +1,10 @@
-// frontend/src/main.tsx (ACTUALIZADO)
+// frontend/src/main.tsx (CORREGIDO)
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-// (Importaciones de páginas existentes)
+// --- ¡CORRECCIÓN! Se añadió .tsx a todas las importaciones ---
 import { LoginPage } from './LoginPage.tsx'
 import { RegisterPage } from './RegisterPage.tsx'
 import { VerifyPage } from './VerifyPage.tsx'
@@ -22,31 +22,20 @@ import { AdminExerciseEditPage } from './AdminExerciseEditPage.tsx'
 import { AdminRoutineDashboard } from './AdminRoutineDashboard.tsx'
 import { AdminRoutineCreatePage } from './AdminRoutineCreatePage.tsx'
 import { AdminRoutineAssignPage } from './AdminRoutineAssignPage.tsx'
-
-// --- ¡NUEVA PÁGINA DEL PACIENTE! ---
-import { PatientRoutinePage } from './PatientRoutinePage.tsx' 
+import { PatientRoutinePage } from './PatientRoutinePage.tsx'
 
 
-// Define las rutas
+// Define las rutas (se quedan igual)
 const router = createBrowserRouter([
-  // ... (Tus rutas de /login, /register, etc. se quedan igual)
   { path: "/login", element: <LoginPage /> },
   { path: "/register", element: <RegisterPage /> },
   { path: "/verify", element: <VerifyPage /> },
-  
-  // --- RUTAS DE PACIENTE ---
-  { path: "/", element: <HomePage /> }, // El dashboard del paciente
-  {
-    path: "/my-routine", // <-- ¡NUEVA RUTA!
-    element: <PatientRoutinePage />,
-  },
-
-  // ... (Tus rutas /forgot-password y /auth/callback se quedan igual)
+  { path: "/", element: <HomePage /> },
   { path: "/forgot-password", element: <ForgotPasswordPage /> },
   { path: "/reset-password", element: <ResetPasswordPage /> },
   { path: "/auth/callback", element: <AuthCallbackPage /> },
   
-  // --- Rutas de Administrador ---
+  // Rutas de Administrador
   { path: "/admin/dashboard", element: <AdminDashboardPage /> },
   { path: "/admin/users", element: <AdminUserListPage /> },
   { path: "/admin/users/pending", element: <AdminPendingUsersPage /> },
@@ -57,6 +46,9 @@ const router = createBrowserRouter([
   { path: "/admin/routines", element: <AdminRoutineDashboard /> },
   { path: "/admin/routines/create", element: <AdminRoutineCreatePage /> },
   { path: "/admin/routines/assign", element: <AdminRoutineAssignPage /> },
+  
+  // Ruta de Paciente
+  { path: "/my-routine", element: <PatientRoutinePage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

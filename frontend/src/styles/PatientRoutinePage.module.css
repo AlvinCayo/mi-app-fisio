@@ -3,7 +3,8 @@
 .page {
   max-width: 430px; 
   margin: 0 auto;
-  padding: 0 20px 120px 20px; /* Padding extra abajo para el botón 'Iniciar' */
+  /* Padding extra abajo para el botón 'Iniciar' */
+  padding: 0 20px 120px 20px; 
   font-family: 'Mulish', sans-serif;
   min-height: 100vh;
   background-color: #FFFFFF;
@@ -42,8 +43,8 @@
 
 /* Estilo de la tarjeta de ejercicio (Rosa) */
 .exerciseCard {
-  /* ¡CAMBIO! Fondo rosa como en tu figma */
-  background: #fcecf5; /* Un rosa pálido similar */
+  /* Fondo rosa pálido como en tu figma */
+  background: #fcecf5; 
   border: 1px solid #f9d3e9;
   
   border-radius: 16px;
@@ -54,6 +55,10 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   text-decoration: none;
   color: inherit;
+  transition: transform 0.2s;
+}
+.exerciseCard:hover {
+  transform: translateY(-5px);
 }
 
 /* Contenedor de la imagen del ejercicio */
@@ -103,6 +108,7 @@
   padding: 20px;
   background: #FFFFFF;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
 .startButton {
   padding: 14px 24px;
@@ -123,6 +129,11 @@
   text-align: center;
 }
 .message {
+  color: #555;
+  font-size: 16px;
+  text-align: center;
+}
+.loading {
   color: #555;
   font-size: 16px;
   text-align: center;
