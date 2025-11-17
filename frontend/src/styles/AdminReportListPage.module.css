@@ -1,0 +1,88 @@
+/* frontend/src/styles/AdminReportListPage.module.css (NUEVO) */
+
+.page {
+  max-width: 430px; 
+  margin: 0 auto;
+  padding: 0 20px 20px 20px; 
+  font-family: 'Mulish', sans-serif;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  box-sizing: border-box;
+}
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  background-color: #FFFFFF;
+  margin: 0 -20px;
+  padding: 20px;
+}
+.backArrow {
+  width: 24px; 
+  height: 24px;
+  cursor: pointer;
+}
+.headerTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #373F41;
+  margin: 0;
+}
+.pageTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  color: #373F41;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.tableContainer {
+  width: 100%;
+  overflow-x: auto; 
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.table th,
+.table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.table th {
+  background-color: #f4f4f4;
+}
+.table tr:last-child td {
+  border-bottom: none;
+}
+.button {
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12px;
+}
+.viewButton {
+  background-color: #3F37C9; /* Morado */
+  text-decoration: none;
+  display: inline-block;
+}
+.error {
+  color: red;
+  font-size: 14px;
+}

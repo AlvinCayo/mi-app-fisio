@@ -314,6 +314,65 @@ app.post('/api/admin/users/:id/deactivate', [verifyToken, isAdmin], async (req, 
     }
 });
 
+// ... (justo después del endpoint /api/admin/users/:id/deactivate)
+
+// ¡NUEVO! Obtener lista de pacientes QUE HAN ENVIADO reportes
+app.get('/api/admin/reports/summary', [verifyToken, isAdmin], async (req, res) => {
+    try {
+        // Esta consulta agrupa por paciente y cuenta cuántos reportes ha enviado
+        const summary = await pool.query(
+            `SELECT 
+                u.id, 
+                u.nombre_completo, 
+                u.email, 
+                u.ci, 
+                COUNT(r.id) as total_reportes,
+                MAX(r.fecha_reporte) as ultimo_reporte
+             FROM usuarios u
+             JOIN reportes_paciente r ON u.id = r.paciente_id
+             WHERE u.role = 'paciente'
+             GROUP BY u.id
+             ORDER BY ultimo_reporte DESC`
+        );
+        res.status(200).json(summary.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+});
+
+// ¡NUEVO! Obtener todos los reportes de UN paciente específico
+app.get('/api/admin/reports/patient/:id', [verifyToken, isAdmin], async (req, res) => {
+    try {
+        const { id } = req.params; // ID del paciente
+
+        // Obtenemos los datos del paciente
+        const patientResult = await pool.query('SELECT id, nombre_completo, email FROM usuarios WHERE id = $1', [id]);
+        if (patientResult.rows.length === 0) {
+            return res.status(404).json({ error: 'Paciente no encontrado.' });
+        }
+
+        // Obtenemos sus reportes
+        const reportsResult = await pool.query(
+            `SELECT id, fecha_reporte, sintomas, comentario 
+             FROM reportes_paciente
+             WHERE paciente_id = $1
+             ORDER BY fecha_reporte DESC`,
+            [id]
+        );
+        
+        const response = {
+            paciente: patientResult.rows[0],
+            reportes: reportsResult.rows
+        };
+        
+        res.status(200).json(response);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+});
 
 // --- 8. Endpoints de Gestión de Ejercicios ---
 app.post('/api/admin/exercises', [verifyToken, isPhysioOrAdmin, upload.single('media')], async (req, res) => {
@@ -633,6 +692,170 @@ app.get('/api/patient/my-routine-for-today', [verifyToken, isPatient], async (re
         
     } catch (error) {
         console.error(error);
+        res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+});
+
+// ... (justo después del endpoint /api/patient/my-routine-for-today)
+
+// ¡NUEVO! Paciente envía un reporte diario
+app.post('/api/patient/reports', [verifyToken, isPatient], async (req, res) => {
+    const { userId } = req.user;
+    const { sintomas, comentario } = req.body; // sintomas es un array de strings
+
+    if (!sintomas || sintomas.length === 0) {
+        return res.status(400).json({ error: 'Debes seleccionar al menos un síntoma.' });
+    }
+
+    try {
+        // La BD se encarga de la fecha (DEFAULT CURRENT_DATE)
+        // y de la unicidad (UNIQUE)
+        const newReport = await pool.query(
+            `INSERT INTO reportes_paciente (paciente_id, sintomas, comentario)
+             VALUES ($1, $2, $3)
+             RETURNING *`,
+            [userId, sintomas, comentario]
+        );
+        res.status(201).json({ message: 'Informe enviado con éxito.', report: newReport.rows[0] });
+
+    } catch (error) {
+        console.error(error);
+        if (error.code === '23505') { // Error de unique_violation
+            return res.status(400).json({ error: 'Ya has enviado un informe hoy.' });
+        }
+        res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+});
+
+// ... (después de app.post('/api/patient/reports', ...))
+
+// ¡NUEVO! Obtener el informe de HOY
+app.get('/api/patient/reports/today', [verifyToken, isPatient], async (req, res) => {
+    const { userId } = req.user;
+    try {
+        const report = await pool.query(
+            `SELECT * FROM reportes_paciente 
+             WHERE paciente_id = $1 AND fecha_reporte = CURRENT_DATE`,
+            [userId]
+        );
+        
+        if (report.rows.length === 0) {
+            return res.status(404).json({ message: 'No se encontró ningún informe para hoy.' });
+        }
+        res.status(200).json(report.rows[0]);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+});
+
+// ¡NUEVO! Actualizar el informe de HOY
+app.put('/api/patient/reports/today', [verifyToken, isPatient], async (req, res) => {
+    const { userId } = req.user;
+    const { sintomas, comentario } = req.body; // sintomas es un array de strings
+
+    if (!sintomas || sintomas.length === 0) {
+        return res.status(400).json({ error: 'Debes seleccionar al menos un síntoma.' });
+    }
+
+    try {
+        const updatedReport = await pool.query(
+            `UPDATE reportes_paciente 
+             SET sintomas = $1, comentario = $2 
+             WHERE paciente_id = $3 AND fecha_reporte = CURRENT_DATE
+             RETURNING *`,
+            [sintomas, comentario, userId]
+        );
+        
+        if (updatedReport.rows.length === 0) {
+            return res.status(404).json({ error: 'No se encontró ningún informe para actualizar.' });
+        }
+        res.status(200).json({ message: 'Informe actualizado con éxito.', report: updatedReport.rows[0] });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+});
+
+// ¡NUEVO! Eliminar el informe de HOY
+app.delete('/api/patient/reports/today', [verifyToken, isPatient], async (req, res) => {
+    const { userId } = req.user;
+    try {
+        const deletedReport = await pool.query(
+            `DELETE FROM reportes_paciente 
+             WHERE paciente_id = $1 AND fecha_reporte = CURRENT_DATE
+             RETURNING *`,
+            [userId]
+        );
+        
+        if (deletedReport.rows.length === 0) {
+            return res.status(404).json({ error: 'No se encontró ningún informe para eliminar.' });
+        }
+        res.status(200).json({ message: 'Informe eliminado con éxito.' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+});
+
+// ... (después de app.delete('/api/patient/reports/today', ...))
+
+// ¡NUEVO! Obtener ejercicios asignados al paciente para HOY
+app.get('/api/patient/assigned-exercises/today', [verifyToken, isPatient], async (req, res) => {
+    const { userId } = req.user;
+    try {
+        const result = await pool.query(
+            `SELECT
+                ae.id,
+                e.nombre AS nombre_ejercicio,
+                e.descripcion AS descripcion_ejercicio,
+                ae.series,
+                ae.repeticiones,
+                ae.duracion_segundos,
+                e.imagen_url
+            FROM asignaciones_ejercicios ae
+            JOIN ejercicios e ON ae.ejercicio_id = e.id
+            WHERE ae.paciente_id = $1 AND ae.fecha_asignada = CURRENT_DATE
+            ORDER BY ae.id;`, // O por un orden específico si lo necesitas
+            [userId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error("Error al obtener ejercicios asignados de hoy:", error);
+        res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+});
+
+// ¡NUEVO! Obtener detalles de un ejercicio asignado específico
+app.get('/api/patient/assigned-exercises/:exerciseId', [verifyToken, isPatient], async (req, res) => {
+    const { userId } = req.user;
+    const { exerciseId } = req.params;
+    try {
+        const result = await pool.query(
+            `SELECT
+                ae.id,
+                e.nombre AS nombre_ejercicio,
+                e.descripcion AS descripcion_ejercicio,
+                ae.series,
+                ae.repeticiones,
+                ae.duracion_segundos,
+                e.imagen_url
+            FROM asignaciones_ejercicios ae
+            JOIN ejercicios e ON ae.ejercicio_id = e.id
+            WHERE ae.paciente_id = $1 AND ae.id = $2;`,
+            [userId, exerciseId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Ejercicio asignado no encontrado o no te pertenece.' });
+        }
+        res.status(200).json(result.rows[0]);
+
+    } catch (error) {
+        console.error("Error al obtener detalle del ejercicio asignado:", error);
         res.status(500).json({ error: 'Error interno del servidor.' });
     }
 });

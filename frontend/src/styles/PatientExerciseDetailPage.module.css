@@ -1,0 +1,92 @@
+/* frontend/src/styles/PatientExerciseDetailPage.module.css */
+
+.page {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 0 20px 20px 20px;
+  font-family: 'Mulish', sans-serif;
+  min-height: 100vh;
+  background-color: #f8f9fa; /* Fondo gris claro */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Empuja el botón al final */
+  align-items: center;
+  text-align: center;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  background-color: #FFFFFF;
+  margin: 0 -20px;
+  padding: 20px;
+  box-sizing: border-box; /* Asegura que el padding no desborde */
+}
+.backArrow {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+.headerTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #373F41;
+  margin: 0;
+}
+
+.content {
+  flex-grow: 1; /* Permite que el contenido tome el espacio */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center;
+  padding-bottom: 30px; /* Espacio para el botón flotante */
+}
+
+.exerciseName {
+  font-weight: 700;
+  font-size: 28px;
+  color: #373F41;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.exerciseDescription {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.8;
+  max-width: 350px;
+  margin-bottom: 40px;
+}
+
+.startButton {
+  padding: 14px 24px;
+  background: #3F37C9;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 700;
+  width: 100%;
+  max-width: 250px; /* Limita el ancho del botón */
+  margin-top: 30px; /* Espacio arriba del botón */
+}
+.startButton:disabled {
+  background: #aaa;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}

@@ -1,0 +1,74 @@
+/* frontend/src/styles/PatientExerciseExecutionPage.module.css */
+
+.page {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Mulish', sans-serif;
+  min-height: 100vh;
+  background-color: #f8f9fa; /* Fondo gris claro */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around; /* Distribuye el espacio */
+  align-items: center;
+  text-align: center;
+}
+
+.exerciseName {
+  font-weight: 700;
+  font-size: 28px;
+  color: #373F41;
+  margin-bottom: 30px;
+}
+
+.timerContainer {
+  position: relative;
+  width: 200px; /* Tamaño del círculo */
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 8px solid #E0DDF2; /* Borde del círculo exterior */
+  margin-bottom: 40px;
+  background-color: white; /* Fondo blanco para el círculo */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.timerImage {
+  width: 100px; /* Tamaño de la imagen dentro del círculo */
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.timerText {
+  position: absolute; /* Superpone el texto sobre la imagen */
+  font-size: 48px;
+  font-weight: 700;
+  color: #3F37C9; /* Color morado */
+}
+
+.finishButton {
+  padding: 14px 24px;
+  background: #3F37C9;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 700;
+  width: 100%;
+  max-width: 250px;
+}
+.finishButton:disabled {
+  background: #aaa;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}

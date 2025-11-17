@@ -1,0 +1,114 @@
+/* frontend/src/styles/AdminPatientReportViewPage.module.css (NUEVO) */
+
+.page {
+  max-width: 430px; 
+  margin: 0 auto;
+  padding: 0 20px 20px 20px; 
+  font-family: 'Mulish', sans-serif;
+  min-height: 100vh;
+  background-color: #f8f9fa; /* Fondo gris claro */
+  box-sizing: border-box;
+}
+
+/* Cabecera */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  background-color: #FFFFFF;
+  margin: 0 -20px;
+  padding: 20px;
+}
+.backArrow {
+  width: 24px; 
+  height: 24px;
+  cursor: pointer;
+}
+.headerTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #373F41;
+  margin: 0;
+  /* Trunca el nombre si es muy largo */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Contenedor de la lista de reportes */
+.reportList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* --- ¡NUEVO DISEÑO DE TARJETA DE REPORTE! --- */
+.reportCard {
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.reportDate {
+  font-weight: 700;
+  font-size: 18px;
+  color: #3F37C9; /* Color morado */
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.reportSectionTitle {
+  font-weight: 700;
+  font-size: 16px;
+  color: #373F41;
+  margin: 0 0 5px 0;
+}
+
+.symptomList {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.symptomItem {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.commentBox {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 12px 15px;
+}
+
+.commentText {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+  /* Permite que el texto largo se ajuste */
+  white-space: pre-wrap; 
+  word-wrap: break-word;
+  margin: 0;
+}
+
+.noCommentText {
+  composes: commentText;
+  color: #777;
+  font-style: italic;
+}
+/* --- FIN DEL NUEVO DISEÑO --- */
+
+.error {
+  color: red;
+  font-size: 14px;
+}

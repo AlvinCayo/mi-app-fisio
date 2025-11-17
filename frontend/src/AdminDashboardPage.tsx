@@ -33,33 +33,36 @@ export function AdminDashboardPage() {
     }
   }, [token, navigate]);
 
-  const goToUserManagement = () => {
-    navigate('/admin/users'); 
+  const goToUserManagement = () => navigate('/admin/users');
+  const goToExerciseManagement = () => navigate('/admin/exercises');
+  const goToStats = () => alert('Función de "Estadísticas" no implementada');
+
+  // --- ¡NUEVA NAVEGACIÓN! ---
+  const goToReportManagement = () => {
+    navigate('/admin/reports');
   };
 
-  // --- ¡CAMBIO AQUÍ! ---
-  const goToExerciseManagement = () => {
-    // Ya no es un alert, ahora navega
-    navigate('/admin/exercises'); 
-  };
-
-  const goToStats = () => {
-    alert('Función de "Estadísticas" no implementada');
-  };
-
-  if (error) {
-    // ... (Tu JSX de error se queda igual)
-  }
+  if (error) { /*... (JSX de error se queda igual) ...*/ }
 
   return (
     <div className={styles.page}>
-      
       <header className={styles.header}>
         <img src={logo} alt="Logo" className={styles.logo} />
         <span className={styles.title}>Panel de Administrador</span>
       </header>
 
       <main className={styles.mainContent}>
+
+        {/* --- ¡NUEVA TARJETA DE REPORTES! --- */}
+        <section className={styles.card}>
+          <h2 className={styles.cardTitle}>Gestión de Informes</h2>
+          <p className={styles.cardSubtitle}>
+            Revisar los informes diarios de síntomas de los pacientes.
+          </p>
+          <button className={styles.cardButton} onClick={goToReportManagement}>
+            Ir a Informes
+          </button>
+        </section>
 
         <section className={styles.card}>
           <h2 className={styles.cardTitle}>Gestión de Usuarios</h2>
@@ -76,7 +79,6 @@ export function AdminDashboardPage() {
           <p className={styles.cardSubtitle}>
             Asignar o borrar rutinas de ejercicios por paciente.
           </p>
-          {/* ¡Este botón ahora funciona! */}
           <button className={styles.cardButton} onClick={goToExerciseManagement}>
             Ir a Gestión de Ejercicios
           </button>

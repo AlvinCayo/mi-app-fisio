@@ -4,7 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-// (Importaciones de páginas existentes)
+// (Importaciones existentes)
 import { LoginPage } from './LoginPage.tsx'
 import { RegisterPage } from './RegisterPage.tsx'
 import { VerifyPage } from './VerifyPage.tsx'
@@ -23,18 +23,20 @@ import { AdminRoutineDashboard } from './AdminRoutineDashboard.tsx'
 import { AdminRoutineCreatePage } from './AdminRoutineCreatePage.tsx'
 import { AdminRoutineAssignPage } from './AdminRoutineAssignPage.tsx'
 import { PatientRoutinePage } from './PatientRoutinePage.tsx'
-
-// --- ¡NUEVA PÁGINA DE EDICIÓN DE RUTINA! ---
 import { AdminRoutineEditPage } from './AdminRoutineEditPage.tsx'
 
+// --- ¡NUEVAS PÁGINAS DE REPORTES! ---
+import { AdminReportListPage } from './AdminReportListPage.tsx'
+import { AdminPatientReportViewPage } from './AdminPatientReportViewPage.tsx'
 
 // Define las rutas
 const router = createBrowserRouter([
-  // ... (Tus rutas de /login, /register, /, etc. se quedan igual)
+  // ... (rutas de paciente y auth)
   { path: "/login", element: <LoginPage /> },
   { path: "/register", element: <RegisterPage /> },
   { path: "/verify", element: <VerifyPage /> },
   { path: "/", element: <HomePage /> },
+  { path: "/my-routine", element: <PatientRoutinePage /> },
   { path: "/forgot-password", element: <ForgotPasswordPage /> },
   { path: "/reset-password", element: <ResetPasswordPage /> },
   { path: "/auth/callback", element: <AuthCallbackPage /> },
@@ -49,13 +51,17 @@ const router = createBrowserRouter([
   { path: "/admin/exercises/edit/:id", element: <AdminExerciseEditPage /> },
   { path: "/admin/routines", element: <AdminRoutineDashboard /> },
   { path: "/admin/routines/create", element: <AdminRoutineCreatePage /> },
+  { path: "/admin/routines/edit/:id", element: <AdminRoutineEditPage /> },
   { path: "/admin/routines/assign", element: <AdminRoutineAssignPage /> },
-  { path: "/my-routine", element: <PatientRoutinePage /> }, // Ruta de Paciente
 
-  // --- ¡NUEVA RUTA PARA EDITAR UNA RUTINA! ---
+  // --- ¡NUEVAS RUTAS DE REPORTES! ---
   {
-    path: "/admin/routines/edit/:id", // El :id es un parámetro de la URL
-    element: <AdminRoutineEditPage />,
+    path: "/admin/reports",
+    element: <AdminReportListPage />,
+  },
+  {
+    path: "/admin/reports/patient/:id",
+    element: <AdminPatientReportViewPage />,
   },
 ]);
 

@@ -1,0 +1,120 @@
+/* frontend/src/styles/PatientExerciseListPage.module.css */
+
+.page {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 0 20px 20px 20px;
+  font-family: 'Mulish', sans-serif;
+  min-height: 100vh;
+  background-color: #f8f9fa; /* Fondo gris claro */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cabecera */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  background-color: #FFFFFF;
+  margin: 0 -20px;
+  padding: 20px;
+}
+.backArrow {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+.headerTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #373F41;
+  margin: 0;
+}
+
+.exerciseList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-grow: 1; /* Permite que la lista crezca */
+  margin-bottom: 20px; /* Espacio antes del botón Iniciar */
+}
+
+/* Tarjeta de ejercicio */
+.exerciseCard {
+  background: #FFE5EE; /* Rosado claro de la imagen 2 */
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.exerciseCard:hover {
+  transform: translateY(-2px);
+}
+
+.exerciseImage {
+  width: 80px; /* Ajusta según tus imágenes reales */
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background-color: #f0f0f0; /* Fondo por si no carga la imagen */
+}
+
+.exerciseDetails {
+  flex-grow: 1;
+}
+
+.exerciseName {
+  font-weight: 700;
+  font-size: 18px;
+  color: #373F41;
+  margin: 0 0 5px 0;
+}
+
+.exerciseInfo {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+/* Botón "Iniciar" global de la lista */
+.startRoutineButton {
+  padding: 14px 24px;
+  background: #3F37C9;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 700;
+  width: 100%;
+  margin-top: auto; /* Empuja el botón al final */
+}
+.startRoutineButton:disabled {
+  background: #aaa;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+.message {
+  color: green;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
