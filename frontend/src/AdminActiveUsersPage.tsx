@@ -31,7 +31,7 @@ export function AdminActiveUsersPage() {
   const fetchAllPatients = useCallback(async () => {
     if (!token) return;
     try {
-      const response = await axios.get('import.meta.env.VITE_API_URL/api/admin/active-users', {
+      const response = await axios.get('${import.meta.env.VITE_API_URL}/api/admin/active-users', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(response.data);

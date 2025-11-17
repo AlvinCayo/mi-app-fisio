@@ -48,10 +48,10 @@ export function AdminRoutineAssignPage() {
   const fetchInitialData = useCallback(async () => {
     if (!token) return;
     try {
-      const patientsRes = await axios.get('import.meta.env.VITE_API_URL/api/admin/assignable-patients', {
+      const patientsRes = await axios.get('${import.meta.env.VITE_API_URL}/api/admin/assignable-patients', {
         headers: { Authorization: `Bearer ${token}` }
       });
-      const routinesRes = await axios.get('import.meta.env.VITE_API_URL/api/admin/routines', {
+      const routinesRes = await axios.get('${import.meta.env.VITE_API_URL}/api/admin/routines', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPatients(patientsRes.data);
@@ -73,7 +73,7 @@ export function AdminRoutineAssignPage() {
       return;
     }
     try {
-      const response = await axios.get(`import.meta.env.VITE_API_URL/api/admin/calendar/${selectedPatientId}`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/calendar/${selectedPatientId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAssignments(response.data);
@@ -109,7 +109,7 @@ export function AdminRoutineAssignPage() {
     }
     const isoDate = selectedDate.toISOString().split('T')[0];
     try {
-      await axios.post('import.meta.env.VITE_API_URL/api/admin/calendar/assign', 
+      await axios.post('${import.meta.env.VITE_API_URL}/api/admin/calendar/assign', 
         { paciente_id: Number(selectedPatientId), rutina_id: Number(selectedRoutineId), fecha_asignada: isoDate },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -123,7 +123,7 @@ export function AdminRoutineAssignPage() {
   const handleDeleteAssignment = async (assignmentId: number) => {
     if (!token || !window.confirm("¿Quitar esta rutina del calendario?")) return;
     try {
-      await axios.delete(`import.meta.env.VITE_API_URL/api/admin/calendar/unassign/${assignmentId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/admin/calendar/unassign/${assignmentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage('Asignación eliminada.');

@@ -22,8 +22,8 @@ interface Routine {
 }
 
 // --- URLs del Backend ---
-const API_URL = 'import.meta.env.VITE_API_URL/api';
-const BACKEND_URL = 'import.meta.env.VITE_API_URL';
+const API_URL = '${import.meta.env.VITE_API_URL}/api';
+const BACKEND_URL = '${import.meta.env.VITE_API_URL}';
 
 export function PatientRoutinePage() {
   const navigate = useNavigate();

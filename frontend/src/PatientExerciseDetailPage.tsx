@@ -41,7 +41,7 @@ export function PatientExerciseDetailPage() {
       }
 
       // Endpoint para obtener los detalles de un ejercicio asignado específico
-      const response = await axios.get(`import.meta.env.VITE_API_URL/api/patient/assigned-exercises/${exerciseId}`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/patient/assigned-exercises/${exerciseId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setExercise(response.data);

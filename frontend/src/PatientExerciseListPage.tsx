@@ -44,7 +44,7 @@ export function PatientExerciseListPage() {
       }
 
       // Endpoint para obtener los ejercicios asignados para HOY
-      const response = await axios.get('import.meta.env.VITE_API_URL/api/patient/assigned-exercises/today', {
+      const response = await axios.get('${import.meta.env.VITE_API_URL}/api/patient/assigned-exercises/today', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAssignedExercises(response.data);

@@ -47,7 +47,7 @@ export function AdminPatientReportViewPage() {
     // Cargar los reportes de este paciente
     const fetchPatientReports = async () => {
       try {
-        const response = await axios.get(`import.meta.env.VITE_API_URL/api/admin/reports/patient/${id}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/reports/patient/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setPatient(response.data.paciente);

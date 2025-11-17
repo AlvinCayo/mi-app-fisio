@@ -67,7 +67,7 @@ export function AdminRoutineEditPage() {
   const fetchInitialExercises = useCallback(async () => {
     if (!token) return;
     try {
-      const response = await axios.get('import.meta.env.VITE_API_URL/api/admin/exercises', {
+      const response = await axios.get('${import.meta.env.VITE_API_URL}/api/admin/exercises', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAllExercises(response.data);
@@ -84,7 +84,7 @@ export function AdminRoutineEditPage() {
     if (!token || isNaN(routineId)) return;
 
     try {
-      const response = await axios.get(`import.meta.env.VITE_API_URL/api/admin/routines/${routineId}`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/routines/${routineId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const routine: RoutineToEdit = response.data;
@@ -177,7 +177,7 @@ export function AdminRoutineEditPage() {
     }
 
     try {
-      await axios.put(`import.meta.env.VITE_API_URL/api/admin/routines/${routineId}`, 
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/admin/routines/${routineId}`, 
         {
           nombre: routineName,
           descripcion: routineDescription,

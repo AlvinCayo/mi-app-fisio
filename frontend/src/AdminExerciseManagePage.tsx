@@ -37,7 +37,7 @@ export function AdminExerciseManagePage() {
   const fetchExercises = useCallback(async () => {
     if (!token) return;
     try {
-      const response = await axios.get('import.meta.env.VITE_API_URL/api/admin/exercises', {
+      const response = await axios.get('${import.meta.env.VITE_API_URL}/api/admin/exercises', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setExercises(response.data);
@@ -89,7 +89,7 @@ export function AdminExerciseManagePage() {
     }
 
     try {
-      await axios.post('import.meta.env.VITE_API_URL/api/admin/exercises', formData, {
+      await axios.post('${import.meta.env.VITE_API_URL}/api/admin/exercises', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -117,7 +117,7 @@ export function AdminExerciseManagePage() {
       return;
     }
     try {
-      await axios.delete(`import.meta.env.VITE_API_URL/api/admin/exercises/${exerciseId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/admin/exercises/${exerciseId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage('Ejercicio eliminado con éxito.');
@@ -200,7 +200,7 @@ export function AdminExerciseManagePage() {
             <div key={ex.id} className={styles.exerciseItem}>
               <div className={styles.exerciseInfo}>
                 <img 
-                  src={ex.url_media ? `import.meta.env.VITE_API_URL${ex.url_media}` : logo} 
+                  src={ex.url_media ? `${import.meta.env.VITE_API_URL}${ex.url_media}` : logo} 
                   alt={ex.nombre}
                   className={styles.mediaPreview}
                 />
