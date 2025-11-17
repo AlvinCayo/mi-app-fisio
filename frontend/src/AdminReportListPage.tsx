@@ -40,7 +40,7 @@ export function AdminReportListPage() {
     
     const fetchReportSummary = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/admin/reports/summary', {
+        const response = await axios.get('import.meta.env.VITE_API_URL/api/admin/reports/summary', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setReportList(response.data);

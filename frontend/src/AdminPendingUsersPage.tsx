@@ -29,7 +29,7 @@ export function AdminPendingUsersPage() {
   const fetchPendingUsers = useCallback(async () => {
     if (!token) return;
     try {
-      const response = await axios.get('http://localhost:3000/api/admin/pending-users', {
+      const response = await axios.get('import.meta.env.VITE_API_URL/api/admin/pending-users', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(response.data);
@@ -63,7 +63,7 @@ export function AdminPendingUsersPage() {
       return;
     }
     try {
-      await axios.post(`http://localhost:3000/api/admin/users/${userId}/approve`, {}, {
+      await axios.post(`import.meta.env.VITE_API_URL/api/admin/users/${userId}/approve`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage('Usuario aprobado con éxito.');
@@ -79,7 +79,7 @@ export function AdminPendingUsersPage() {
       return;
     }
     try {
-      await axios.post(`http://localhost:3000/api/admin/users/${userId}/deactivate`, {}, {
+      await axios.post(`import.meta.env.VITE_API_URL/api/admin/users/${userId}/deactivate`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage('Usuario desactivado con éxito.');

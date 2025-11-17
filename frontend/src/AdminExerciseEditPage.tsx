@@ -44,7 +44,7 @@ export function AdminExerciseEditPage() {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:3000/api/admin/exercises/${exerciseId}`, {
+      const response = await axios.get(`import.meta.env.VITE_API_URL/api/admin/exercises/${exerciseId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const exercise: Exercise = response.data;
@@ -105,7 +105,7 @@ export function AdminExerciseEditPage() {
     formData.append('removeMedia', String(removeMedia)); // Envía si se debe eliminar el medio existente
 
     try {
-      await axios.put(`http://localhost:3000/api/admin/exercises/${exerciseId}`, formData, {
+      await axios.put(`import.meta.env.VITE_API_URL/api/admin/exercises/${exerciseId}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -163,9 +163,9 @@ export function AdminExerciseEditPage() {
           <div className={styles.currentMediaContainer}>
             <span className={styles.currentMediaLabel}>Tutorial Actual:</span>
             {currentMediaUrl.endsWith('.mp4') || currentMediaUrl.endsWith('.webm') ? (
-              <video controls src={`http://localhost:3000${currentMediaUrl}`} className={styles.currentMedia} />
+              <video controls src={`import.meta.env.VITE_API_URL${currentMediaUrl}`} className={styles.currentMedia} />
             ) : (
-              <img src={`http://localhost:3000${currentMediaUrl}`} alt="Media actual" className={styles.currentMedia} />
+              <img src={`import.meta.env.VITE_API_URL${currentMediaUrl}`} alt="Media actual" className={styles.currentMedia} />
             )}
             <button 
               type="button" 
