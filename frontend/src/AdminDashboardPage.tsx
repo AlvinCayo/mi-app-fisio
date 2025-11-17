@@ -84,16 +84,6 @@ export function AdminDashboardPage() {
           </button>
         </section>
         
-        <section className={styles.card}>
-          <h2 className={styles.cardTitle}>Estadísticas</h2>
-          <p className={styles.cardSubtitle}>
-            Ver el progreso general de los pacientes (próximamente).
-          </p>
-          <button className={styles.cardButton} onClick={goToStats}>
-            Ver Estadísticas
-          </button>
-        </section>
-        
       </main>
     </div>
   );

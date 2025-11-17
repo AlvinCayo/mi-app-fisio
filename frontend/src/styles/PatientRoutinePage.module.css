@@ -1,10 +1,11 @@
-/* frontend/src/styles/PatientRoutinePage.module.css (NUEVO) */
+/* frontend/src/styles/PatientRoutinePage.module.css */
 
 .page {
   max-width: 430px; 
   margin: 0 auto;
-  /* Padding extra abajo para el botón 'Iniciar' */
-  padding: 0 20px 120px 20px; 
+  /* --- ¡CORREGIDO! --- */
+  /* Padding normal, ya no 120px abajo */
+  padding: 0 20px 40px 20px; 
   font-family: 'Mulish', sans-serif;
   min-height: 100vh;
   background-color: #FFFFFF;
@@ -43,10 +44,8 @@
 
 /* Estilo de la tarjeta de ejercicio (Rosa) */
 .exerciseCard {
-  /* Fondo rosa pálido como en tu figma */
   background: #fcecf5; 
   border: 1px solid #f9d3e9;
-  
   border-radius: 16px;
   padding: 16px;
   display: flex;
@@ -90,6 +89,13 @@
   font-size: 18px;
   color: #373F41;
 }
+/* Clase para la descripción pequeña en la lista */
+.exerciseDescriptionSmall {
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  color: #666; 
+  line-height: 1.3;
+}
 .exerciseStats {
   font-family: 'Mulish', sans-serif;
   font-size: 16px;
@@ -97,17 +103,14 @@
   line-height: 1.4;
 }
 
-/* Botón "Iniciar" (fijo abajo) */
+/* --- ¡CORREGIDO! --- */
+/* Botón "Iniciar" (Ya no es fijo) */
 .startButtonContainer {
-  position: fixed; /* Se queda fijo abajo */
-  bottom: 0;
-  left: 0;
-  right: 0;
-  max-width: 430px; /* Coincide con el ancho de la página */
-  margin: 0 auto;
-  padding: 20px;
-  background: #FFFFFF;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.08);
+  /* Eliminamos position: fixed y propiedades relacionadas */
+  width: 100%;
+  margin-top: 30px; /* Espacio sobre el botón */
+  background: none;
+  box-shadow: none;
   box-sizing: border-box;
 }
 .startButton {

@@ -199,7 +199,7 @@ app.post('/api/auth/login', async (req, res) => {
         if (user.status === 'inactivo') {
             return res.status(403).json({ error: 'Tu cuenta ha sido desactivada.' });
         }
-        const token = jwt.sign({ userId: user.id, ci: user.ci, role: user.role }, process.env.JWT_SECRET, { expiresIn: '8h' } );
+        const token = jwt.sign({ userId: user.id, ci: user.ci, role: user.role, nombre: user.nombre_completo }, process.env.JWT_SECRET, { expiresIn: '8h' } );
         res.status(200).json({ message: 'Login exitoso', token: token, role: user.role });
     } catch (error) {
         console.error(error);
@@ -257,7 +257,7 @@ app.get('/api/auth/google/callback',
         if (req.user.status === 'inactivo') {
             return res.redirect(`${process.env.FRONTEND_URL}/login?status=inactive`);
         }
-        const token = jwt.sign({ userId: req.user.id, ci: req.user.ci, role: req.user.role }, process.env.JWT_SECRET, { expiresIn: '8h' });
+        const token = jwt.sign({ userId: req.user.id, ci: req.user.ci, role: req.user.role, nombre: req.user.nombre_completo }, process.env.JWT_SECRET, { expiresIn: '8h' });
         res.redirect(`${process.env.FRONTEND_URL}/auth/callback?token=${token}`);
     }
 );
@@ -650,7 +650,9 @@ app.get('/api/patient/my-routine-for-today', [verifyToken, isPatient], async (re
             SELECT 
                 r.id as rutina_id, 
                 r.nombre as rutina_nombre, 
-                e.nombre as ejercicio_nombre, 
+                e.id as ejercicio_id,  -- <-- ¡ESTA LÍNEA ES IMPORTANTE!
+                e.nombre as ejercicio_nombre,
+                e.descripcion,
                 e.url_media, 
                 re.series, 
                 re.repeticiones_tiempo,
@@ -680,8 +682,14 @@ app.get('/api/patient/my-routine-for-today', [verifyToken, isPatient], async (re
                     ejercicios: []
                 };
             }
+            // -----------------------------------------------------------------
+            // --- ¡CORRECCIÓN APLICADA AQUÍ! ---
+            // Faltaba añadir el 'id' del ejercicio en el objeto.
+            // -----------------------------------------------------------------
             rutinas[row.rutina_id].ejercicios.push({
+                id: row.ejercicio_id, // <-- ¡ESTA LÍNEA FUE AÑADIDA!
                 nombre: row.ejercicio_nombre,
+                descripcion: row.descripcion,
                 url_media: row.url_media,
                 series: row.series,
                 repeticiones_tiempo: row.repeticiones_tiempo

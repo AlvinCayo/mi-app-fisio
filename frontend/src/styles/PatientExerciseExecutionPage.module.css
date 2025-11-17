@@ -1,5 +1,6 @@
 /* frontend/src/styles/PatientExerciseExecutionPage.module.css */
 
+/* Estilo de página base que centra todo */
 .page {
   max-width: 430px;
   margin: 0 auto;
@@ -10,7 +11,12 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-around; /* Distribuye el espacio */
+  
+  /* --- ¡CORRECCIÓN AQUÍ! --- */
+  /* Cambiado de 'space-around' a 'flex-start' para eliminar el espacio extra */
+  justify-content: flex-start; 
+  /* ------------------------- */
+
   align-items: center;
   text-align: center;
 }
@@ -19,37 +25,40 @@
   font-weight: 700;
   font-size: 28px;
   color: #373F41;
-  margin-bottom: 30px;
+  margin-bottom: 20px; /* Reducido un poco el margen */
 }
 
+/* --- Tus clases de Timer (MANTENIDAS) --- */
 .timerContainer {
   position: relative;
-  width: 200px; /* Tamaño del círculo */
+  width: 200px; 
   height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 8px solid #E0DDF2; /* Borde del círculo exterior */
-  margin-bottom: 40px;
-  background-color: white; /* Fondo blanco para el círculo */
+  border: 8px solid #E0DDF2; 
+  margin: 20px 0 40px 0;
+  background-color: white; 
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  flex-shrink: 0; /* Evita que el timer se encoja */
 }
 
 .timerImage {
-  width: 100px; /* Tamaño de la imagen dentro del círculo */
-  height: 100px;
+  width: 100%; 
+  height: 100%;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .timerText {
-  position: absolute; /* Superpone el texto sobre la imagen */
+  position: absolute; 
   font-size: 48px;
   font-weight: 700;
-  color: #3F37C9; /* Color morado */
+  color: #3F37C9; 
 }
 
+/* --- Tu botón (MANTENIDO) --- */
 .finishButton {
   padding: 14px 24px;
   background: #3F37C9;
@@ -61,6 +70,7 @@
   font-weight: 700;
   width: 100%;
   max-width: 250px;
+  margin-top: 20px; /* Añadido margen superior */
 }
 .finishButton:disabled {
   background: #aaa;
@@ -71,4 +81,101 @@
   font-size: 14px;
   text-align: center;
   margin-top: 10px;
+}
+
+
+/* --- CLASES AÑADIDAS (Corregidas) --- */
+
+/* Para Etapa 1: WelcomeStage */
+.welcomeContainer h1 {
+  font-size: 28px;
+  color: #373F41;
+}
+.welcomeContainer p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Para Etapa 2: ExerciseDetailStage */
+.exerciseDetailContainer p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+.mediaContainer {
+  width: 100%;
+
+  /* --- ¡CORRECCIÓN AQUÍ! --- */
+  /* Aumentado a 100% para que sea más grande */
+  max-width: 100%; 
+  /* ------------------------- */
+
+  margin: 20px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.exerciseImage { /* Esta clase se usa para <img> y <video> */
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Para Etapa 3: Repeticiones (no-timer) */
+.seriesIndicator {
+  font-size: 32px;
+  font-weight: 700;
+  color: #3F37C9;
+  margin-bottom: 20px;
+}
+
+/* Para Etapa de Descanso */
+.restContainer h2 {
+  font-size: 28px;
+  color: #373F41;
+}
+.restContainer p {
+  font-size: 18px;
+  color: #555;
+}
+
+/* Para Etapa Final */
+.finishedRoutineContainer h1 {
+  font-size: 32px;
+  color: #3F37C9;
+}
+.finishedRoutineContainer p {
+  font-size: 18px;
+  color: #373F41;
+}
+
+/* --- CLASES AÑADIDAS EN EL ÚLTIMO PASO (Corregidas) --- */
+
+/* Estilo para la descripción del ejercicio */
+.exerciseDescription {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 0 10px;
+  width: 100%; /* Asegura que ocupe el ancho */
+  box-sizing: border-box;
+}
+
+/* Contenedor para los botones de Iniciar/Volver */
+.buttonGroup {
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espacio entre botones */
+  margin-top: 20px; /* Añadido margen superior */
+}
+
+/* Estilo para el botón secundario "Volver" */
+.backButton {
+  background: #f0f0f0; /* Un color gris claro */
+  color: #373F41; /* Texto oscuro */
+  border: 1px solid #ddd;
 }

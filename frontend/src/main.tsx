@@ -1,4 +1,4 @@
-// frontend/src/main.tsx (ACTUALIZADO)
+// frontend/src/main.tsx (ACTUALIZADO CON LAYOUT DE ADMIN CORREGIDO)
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -24,49 +24,65 @@ import { AdminRoutineCreatePage } from './AdminRoutineCreatePage.tsx'
 import { AdminRoutineAssignPage } from './AdminRoutineAssignPage.tsx'
 import { PatientRoutinePage } from './PatientRoutinePage.tsx'
 import { AdminRoutineEditPage } from './AdminRoutineEditPage.tsx'
-
-// --- ¡NUEVAS PÁGINAS DE REPORTES! ---
 import { AdminReportListPage } from './AdminReportListPage.tsx'
 import { AdminPatientReportViewPage } from './AdminPatientReportViewPage.tsx'
+import { PatientExerciseExecutionPage } from './PatientExerciseExecutionPage.tsx'
+
+// --- ¡NUEVAS IMPORTACIONES DE LAYOUTS! ---
+import { PatientLayout } from './PatientLayout.tsx'
+import { AdminLayout } from './AdminLayout.tsx'
+
 
 // Define las rutas
 const router = createBrowserRouter([
-  // ... (rutas de paciente y auth)
-  { path: "/login", element: <LoginPage /> },
-  { path: "/register", element: <RegisterPage /> },
-  { path: "/verify", element: <VerifyPage /> },
-  { path: "/", element: <HomePage /> },
-  { path: "/my-routine", element: <PatientRoutinePage /> },
-  { path: "/forgot-password", element: <ForgotPasswordPage /> },
-  { path: "/reset-password", element: <ResetPasswordPage /> },
-  { path: "/auth/callback", element: <AuthCallbackPage /> },
-  
-  // --- Rutas de Administrador ---
-  { path: "/admin/dashboard", element: <AdminDashboardPage /> },
-  { path: "/admin/users", element: <AdminUserListPage /> },
-  { path: "/admin/users/pending", element: <AdminPendingUsersPage /> },
-  { path: "/admin/users/manage", element: <AdminActiveUsersPage /> },
-  { path: "/admin/exercises", element: <AdminExerciseDashboard /> },
-  { path: "/admin/exercises/manage", element: <AdminExerciseManagePage /> },
-  { path: "/admin/exercises/edit/:id", element: <AdminExerciseEditPage /> },
-  { path: "/admin/routines", element: <AdminRoutineDashboard /> },
-  { path: "/admin/routines/create", element: <AdminRoutineCreatePage /> },
-  { path: "/admin/routines/edit/:id", element: <AdminRoutineEditPage /> },
-  { path: "/admin/routines/assign", element: <AdminRoutineAssignPage /> },
+  
+  // --- Rutas de Paciente (Con Layout) ---
+  {
+    path: '/',
+    element: <PatientLayout />,
+    children: [
+      { path: '/', element: <HomePage /> },
+      { path: '/my-routine', element: <PatientRoutinePage /> },
+    ]
+  },
 
-  // --- ¡NUEVAS RUTAS DE REPORTES! ---
+  // --- Rutas de Admin (Con Layout) ---
   {
-    path: "/admin/reports",
-    element: <AdminReportListPage />,
+    path: '/admin',
+    element: <AdminLayout />,
+    children: [
+      // Vistas de la barra de navegación
+      { path: 'dashboard', element: <AdminDashboardPage /> },
+      { path: 'routines/assign', element: <AdminRoutineAssignPage /> },
+      { path: 'reports', element: <AdminReportListPage /> },
+
+      // --- ¡RUTAS MOVIDAS AQUÍ DENTRO! ---
+      // (Paths actualizados a relativos, sin /admin)
+      { path: "users", element: <AdminUserListPage /> },
+      { path: "users/pending", element: <AdminPendingUsersPage /> },
+      { path: "users/manage", element: <AdminActiveUsersPage /> },
+      { path: "exercises", element: <AdminExerciseDashboard /> },
+      { path: "exercises/manage", element: <AdminExerciseManagePage /> },
+      { path: "exercises/edit/:id", element: <AdminExerciseEditPage /> },
+      { path: "routines", element: <AdminRoutineDashboard /> },
+      { path: "routines/create", element: <AdminRoutineCreatePage /> },
+      { path: "routines/edit/:id", element: <AdminRoutineEditPage /> },
+      { path: "reports/patient/:id", element: <AdminPatientReportViewPage /> },
+    ]
   },
-  {
-    path: "/admin/reports/patient/:id",
-    element: <AdminPatientReportViewPage />,
-  },
+  
+  // --- Rutas sin Layout (Login, Ejecución de Paciente, etc.) ---
+  { path: "/login", element: <LoginPage /> },
+  { path: "/register", element: <RegisterPage /> },
+  { path: "/verify", element: <VerifyPage /> },
+  { path: "/my-routine/execute", element: <PatientExerciseExecutionPage /> },
+  { path: "/forgot-password", element: <ForgotPasswordPage /> },
+  { path: "/reset-password", element: <ResetPasswordPage /> },
+  { path: "/auth/callback", element: <AuthCallbackPage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 )
