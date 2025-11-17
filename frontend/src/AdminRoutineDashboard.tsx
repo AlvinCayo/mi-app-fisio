@@ -32,7 +32,7 @@ export function AdminRoutineDashboard() {
   const fetchRoutines = useCallback(async () => {
     if (!token) return;
     try {
-      const response = await axios.get('${import.meta.env.VITE_API_URL}/api/admin/routines', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/routines`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setRoutines(response.data);

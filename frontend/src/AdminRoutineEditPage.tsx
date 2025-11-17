@@ -67,7 +67,7 @@ export function AdminRoutineEditPage() {
   const fetchInitialExercises = useCallback(async () => {
     if (!token) return;
     try {
-      const response = await axios.get('${import.meta.env.VITE_API_URL}/api/admin/exercises', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/exercises`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAllExercises(response.data);

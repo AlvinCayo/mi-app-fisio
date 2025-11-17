@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './styles/PatientExerciseExecutionPage.module.css'; 
 
 // --- URL base del backend para las imágenes ---
-const BACKEND_URL = '${import.meta.env.VITE_API_URL}';
+const BACKEND_URL = `${import.meta.env.VITE_API_URL}`;
 
 // --- Interfaces (Corregidas) ---
 interface Ejercicio {

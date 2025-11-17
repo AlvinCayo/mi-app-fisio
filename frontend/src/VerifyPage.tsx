@@ -39,7 +39,7 @@ export function VerifyPage() {
     }
 
     try {
-      await axios.post('${import.meta.env.VITE_API_URL}/api/auth/verify', {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/verify`, {
         email: email,
         codigo_sms: codigo
       });
@@ -57,7 +57,7 @@ export function VerifyPage() {
     setError('');
     setSuccessMessage('');
     try {
-      const response = await axios.post('${import.meta.env.VITE_API_URL}/api/auth/resend-code', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/resend-code`, {
         email: email,
       });
       setSuccessMessage(response.data.message);

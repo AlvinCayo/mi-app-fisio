@@ -29,7 +29,7 @@ export function AdminPendingUsersPage() {
   const fetchPendingUsers = useCallback(async () => {
     if (!token) return;
     try {
-      const response = await axios.get('${import.meta.env.VITE_API_URL}/api/admin/pending-users', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/pending-users`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(response.data);

@@ -41,7 +41,7 @@ export function ReportModal({ onClose }: ReportModalProps) {
       return;
     }
     try {
-      const response = await axios.get<ReportData>('${import.meta.env.VITE_API_URL}/api/patient/reports/today', {
+      const response = await axios.get<ReportData>(`${import.meta.env.VITE_API_URL}/api/patient/reports/today`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       // Si se encuentra un informe, puebla el formulario
@@ -92,14 +92,14 @@ export function ReportModal({ onClose }: ReportModalProps) {
     try {
       if (existingReportId) {
         // --- Flujo de ACTUALIZACIÓN (PUT) ---
-        await axios.put('${import.meta.env.VITE_API_URL}/api/patient/reports/today', 
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/patient/reports/today`, 
           reportPayload,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setMessage('¡Informe actualizado con éxito!');
       } else {
         // --- Flujo de CREACIÓN (POST) ---
-        await axios.post('${import.meta.env.VITE_API_URL}/api/patient/reports', 
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/patient/reports`, 
           reportPayload,
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -125,7 +125,7 @@ export function ReportModal({ onClose }: ReportModalProps) {
     setMessage('');
 
     try {
-      await axios.delete('${import.meta.env.VITE_API_URL}/api/patient/reports/today', {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/patient/reports/today`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage('Informe eliminado con éxito.');

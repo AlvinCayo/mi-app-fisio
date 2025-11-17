@@ -56,7 +56,7 @@ export function AdminRoutineCreatePage() {
     
     const fetchExercises = async () => {
       try {
-        const response = await axios.get('${import.meta.env.VITE_API_URL}/api/admin/exercises', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/exercises`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setAllExercises(response.data);
@@ -126,7 +126,7 @@ export function AdminRoutineCreatePage() {
     }
 
     try {
-      await axios.post('${import.meta.env.VITE_API_URL}/api/admin/routines', 
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/admin/routines`, 
         {
           nombre: routineName,
           descripcion: routineDescription,
