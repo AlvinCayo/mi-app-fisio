@@ -1,4 +1,4 @@
-/* frontend/src/styles/AdminRoutineCreatePage.module.css (CORREGIDO) */
+/* frontend/src/styles/AdminRoutineEditPage.module.css (CORREGIDO) */
 
 .page {
   max-width: 430px; 
@@ -10,7 +10,6 @@
   box-sizing: border-box;
 }
 
-/* Cabecera */
 .header {
   display: flex;
   align-items: center;
@@ -42,7 +41,7 @@
   margin-bottom: 20px;
 }
 
-/* Formulario principal */
+/* Formulario de Edición (Similar a Crear) */
 .form {
   width: 100%;
   display: flex;
@@ -68,18 +67,13 @@
   border: 1px solid #ddd;
   box-sizing: border-box;
 }
-.input::placeholder,
-.textarea::placeholder {
-  color: #737B7D;
-}
 .textarea {
   resize: vertical;
   min-height: 80px;
   border-radius: 16px;
 }
 
-/* --- ¡AQUÍ ESTÁ LA CORRECCIÓN! --- */
-
+/* --- ¡CORRECCIÓN! Clase .button movida aquí arriba --- */
 /* Botón de Guardar Rutina (definido primero) */
 .button {
   padding: 14px 24px;
@@ -95,6 +89,7 @@
 .button:disabled {
   background: #aaa;
 }
+/* --- FIN DE LA CORRECCIÓN --- */
 
 /* Sección para añadir ejercicios */
 .exerciseAdder {
@@ -111,33 +106,15 @@
   align-items: center;
 }
 .smallInput {
-  /* Estilos copiados de .input */
-  padding: 12px 16px;
-  font-family: 'Mulish', sans-serif;
-  font-size: 14px;
-  color: #333; 
-  background: #FFFFFF;
-  border-radius: 30px; 
-  border: 1px solid #ddd;
-  box-sizing: border-box;
-  /* Ancho específico */
+  composes: input; /* Esto funciona porque .input está arriba */
   width: 100px;
 }
 .addButton {
-  /* Estilos copiados de .button */
-  background: #3F37C9;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 30px;
-  font-weight: 700;
-  /* Ancho y padding específicos */
+  composes: button; /* Esto AHORA funciona */
   width: auto;
   padding: 12px 18px;
   font-size: 14px;
 }
-/* --- FIN DE LA CORRECCIÓN --- */
-
 
 /* Lista de ejercicios añadidos a la rutina */
 .exerciseList {

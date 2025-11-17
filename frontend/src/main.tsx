@@ -1,10 +1,10 @@
-// frontend/src/main.tsx (CORREGIDO)
+// frontend/src/main.tsx (ACTUALIZADO)
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-// --- ¡CORRECCIÓN! Se añadió .tsx a todas las importaciones ---
+// (Importaciones de páginas existentes)
 import { LoginPage } from './LoginPage.tsx'
 import { RegisterPage } from './RegisterPage.tsx'
 import { VerifyPage } from './VerifyPage.tsx'
@@ -24,9 +24,13 @@ import { AdminRoutineCreatePage } from './AdminRoutineCreatePage.tsx'
 import { AdminRoutineAssignPage } from './AdminRoutineAssignPage.tsx'
 import { PatientRoutinePage } from './PatientRoutinePage.tsx'
 
+// --- ¡NUEVA PÁGINA DE EDICIÓN DE RUTINA! ---
+import { AdminRoutineEditPage } from './AdminRoutineEditPage.tsx'
 
-// Define las rutas (se quedan igual)
+
+// Define las rutas
 const router = createBrowserRouter([
+  // ... (Tus rutas de /login, /register, /, etc. se quedan igual)
   { path: "/login", element: <LoginPage /> },
   { path: "/register", element: <RegisterPage /> },
   { path: "/verify", element: <VerifyPage /> },
@@ -35,7 +39,7 @@ const router = createBrowserRouter([
   { path: "/reset-password", element: <ResetPasswordPage /> },
   { path: "/auth/callback", element: <AuthCallbackPage /> },
   
-  // Rutas de Administrador
+  // --- Rutas de Administrador ---
   { path: "/admin/dashboard", element: <AdminDashboardPage /> },
   { path: "/admin/users", element: <AdminUserListPage /> },
   { path: "/admin/users/pending", element: <AdminPendingUsersPage /> },
@@ -46,9 +50,13 @@ const router = createBrowserRouter([
   { path: "/admin/routines", element: <AdminRoutineDashboard /> },
   { path: "/admin/routines/create", element: <AdminRoutineCreatePage /> },
   { path: "/admin/routines/assign", element: <AdminRoutineAssignPage /> },
-  
-  // Ruta de Paciente
-  { path: "/my-routine", element: <PatientRoutinePage /> },
+  { path: "/my-routine", element: <PatientRoutinePage /> }, // Ruta de Paciente
+
+  // --- ¡NUEVA RUTA PARA EDITAR UNA RUTINA! ---
+  {
+    path: "/admin/routines/edit/:id", // El :id es un parámetro de la URL
+    element: <AdminRoutineEditPage />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

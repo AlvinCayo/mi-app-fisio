@@ -1,14 +1,12 @@
-/* frontend/src/Calendar.css */
-/* Este CSS sobrescribe los estilos de react-calendar 
-   para que coincidan con tu diseño de Figma */
+/* frontend/src/Calendar.css (CORREGIDO) */
 
 .react-calendar {
   width: 100%;
   max-width: 430px;
   background: white;
-  border: none; /* Sin borde */
+  border: none; 
   font-family: 'Mulish', sans-serif;
-  line-height: 1.5em; /* Aumenta el espaciado */
+  line-height: 1.5em;
 }
 
 /* --- Navegación (Mes y Año) --- */
@@ -16,7 +14,7 @@
   display: flex;
   height: 44px;
   margin-bottom: 1em;
-  border-bottom: 1px solid #eee; /* Línea de separación */
+  border-bottom: 1px solid #eee;
 }
 .react-calendar__navigation button {
   min-width: 44px;
@@ -25,7 +23,7 @@
   cursor: pointer;
   font-family: 'Mulish', sans-serif;
   font-weight: 700;
-  font-size: 18px; /* Tamaño del "Month year" */
+  font-size: 17px;
   color: #373F41;
 }
 .react-calendar__navigation button:disabled {
@@ -36,17 +34,29 @@
   background-color: #f8f9fa;
 }
 
-/* --- Días de la semana (SUN, MON...) --- */
+/* --- Días de la semana (L, M, M...) --- */
 .react-calendar__month-view__weekdays {
   text-align: center;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 0.75em;
-  color: #737B7D; /* Color gris */
+  font-size: 0.85em;
+  color: #737B7D;
 }
 .react-calendar__month-view__weekdays__weekday {
-  padding: 0.5em;
+  padding: -0.5em;
+  /* --- ¡LA CORRECCIÓN DE ALINEACIÓN! --- */
+  /* Esto fuerza a cada día a tomar el mismo espacio */
+  flex-grow: 1;
+  flex-basis: 0;
 }
+
+/* --- CORRECCIÓN DE INICIALES --- */
+/* (Eliminamos la lógica de ::after que no funcionaba) */
+.react-calendar__month-view__weekdays__weekday abbr[title] {
+  text-decoration: none; /* Quita el subrayado */
+}
+/* --- FIN DE LA CORRECCIÓN --- */
+
 
 /* --- Días (Números) --- */
 .react-calendar__tile {
@@ -59,7 +69,7 @@
   font-family: 'Mulish', sans-serif;
   font-size: 0.9em;
   line-height: 1.5em;
-  border-radius: 50%; /* Círculo */
+  border-radius: 50%;
 }
 .react-calendar__tile:disabled {
   background-color: #f0f0f0;
@@ -69,7 +79,6 @@
 .react-calendar__tile:enabled:focus {
   background-color: #f8f9fa;
 }
-/* Día de hoy */
 .react-calendar__tile--now {
   background: #e6f7ff;
 }
@@ -77,9 +86,8 @@
 .react-calendar__tile--now:enabled:focus {
   background: #d0f0ff;
 }
-/* Día seleccionado (el círculo azul) */
 .react-calendar__tile--active {
-  background: #3F37C9; /* Tu morado principal */
+  background: #3F37C9;
   color: white;
 }
 .react-calendar__tile--active:enabled:hover,
@@ -87,12 +95,8 @@
   background: #322c9e;
 }
 
-/* Días que tienen una asignación (un puntito) */
-.react-calendar__tile.has-assignment {
-  position: relative;
-}
-.react-calendar__tile.has-assignment::after {
-  content: '';
+/* Puntito en los días asignados */
+.has-assignment-dot {
   position: absolute;
   bottom: 8px;
   left: 50%;
@@ -100,13 +104,11 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background-color: #3F37C9; /* Punto morado */
+  background-color: #3F37C9;
 }
-.react-calendar__tile--active.has-assignment::after {
-  background-color: white; /* Punto blanco si está seleccionado */
+.react-calendar__tile--active .has-assignment-dot {
+  background-color: white;
 }
-
-/* Oculta los días de otros meses */
 .react-calendar__month-view__days__day--neighboringMonth {
   color: #ddd;
 }

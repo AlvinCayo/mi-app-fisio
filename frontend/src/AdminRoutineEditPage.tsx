@@ -1,4 +1,4 @@
-// frontend/src/AdminRoutineEditPage.tsx (CORREGIDO)
+// frontend/src/AdminRoutineEditPage.tsx (NUEVO ARCHIVO)
 
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
@@ -15,9 +15,20 @@ interface Exercise {
   id: number;
   nombre: string;
 }
+// Esta es la interfaz de los ejercicios que VIENEN DEL BACKEND
+// (en el endpoint /api/admin/routines/:id)
+interface BackendExerciseData {
+  id: number; // El backend nos da 'id', no 'ejercicio_id'
+  nombre: string;
+  series: number;
+  repeticiones_tiempo: string;
+  orden: number;
+}
+// Esta es la interfaz para los ejercicios DENTRO de la rutina
+// (tal como los guardamos en el estado)
 interface RoutineExercise {
-  ejercicio_id: number;
-  nombre?: string;
+  ejercicio_id: number; // Este es el ID que enviamos al backend
+  nombre?: string; // Para mostrar en la lista
   series: number;
   repeticiones_tiempo: string;
   orden: number;
@@ -26,7 +37,7 @@ interface RoutineToEdit {
   id: number;
   nombre: string;
   descripcion: string;
-  ejercicios: RoutineExercise[];
+  ejercicios: BackendExerciseData[]; // <-- Usa la interfaz del backend
 }
 
 export function AdminRoutineEditPage() {
@@ -80,13 +91,19 @@ export function AdminRoutineEditPage() {
       
       setRoutineName(routine.nombre);
       setRoutineDescription(routine.descripcion || '');
+      
+      // --- ¡CORRECCIÓN! ---
+      // Mapea del formato del Backend (ex.id) 
+      // al formato del Estado Local (ejercicio_id)
       setRoutineExercises(routine.ejercicios.map(ex => ({
-        ejercicio_id: ex.id, 
+        ejercicio_id: ex.id, // <-- ex.id ahora es válido
         nombre: ex.nombre,
         series: ex.series,
         repeticiones_tiempo: ex.repeticiones_tiempo,
         orden: ex.orden
       })));
+      // --- FIN CORRECCIÓN ---
+
     } catch (err: any) {
       setError(err.response?.data?.error || 'Error al cargar la rutina.');
       navigate('/admin/routines'); 
@@ -138,16 +155,17 @@ export function AdminRoutineEditPage() {
     setError('');
   };
   
-  // --- ¡CORRECCIÓN APLICADA AQUÍ! ---
+  // --- ¡CORRECCIÓN! ---
+  // Usamos 'ejercicio_id' para filtrar, no 'id'
   const handleRemoveExercise = (exerciseId: number) => {
     setRoutineExercises(
       routineExercises
-        .filter(ex => ex.ejercicio_id !== exerciseId) // <-- CORREGIDO: Usamos ejercicio_id
+        .filter(ex => ex.ejercicio_id !== exerciseId)
         .map((ex, index) => ({ ...ex, orden: index + 1 }))
     );
   };
-  // ------------------------------------
 
+  // --- Guardar la Rutina (PUT en lugar de POST) ---
   const handleSubmitRoutine = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');

@@ -98,6 +98,7 @@ const isAdmin = (req, res, next) => {
     }
     next();
 };
+// (Asumimos que el Admin también es Fisio)
 const isPhysioOrAdmin = (req, res, next) => {
     if (req.user.role === 'admin' || req.user.role === 'fisioterapeuta') {
         next();
@@ -519,14 +520,13 @@ app.delete('/api/admin/routines/:id', [verifyToken, isPhysioOrAdmin], async (req
         res.status(200).json({ message: 'Rutina eliminada con éxito.' });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error interno del servidor.' });
+        res.status(500).json({ error: 'Error interno del servidor al eliminar rutina.' });
     }
 });
 
 
 // --- 10. ENDPOINTS DE ASIGNACIÓN (CALENDARIO) ---
 
-// Obtener asignaciones para un paciente (para el calendario del admin)
 app.get('/api/admin/calendar/:paciente_id', [verifyToken, isPhysioOrAdmin], async (req, res) => {
     try {
         const { paciente_id } = req.params;
@@ -544,7 +544,6 @@ app.get('/api/admin/calendar/:paciente_id', [verifyToken, isPhysioOrAdmin], asyn
         res.status(500).json({ error: 'Error interno del servidor.' });
     }
 });
-// Asignar una rutina a un paciente en una fecha
 app.post('/api/admin/calendar/assign', [verifyToken, isPhysioOrAdmin], async (req, res) => {
     try {
         const { paciente_id, rutina_id, fecha_asignada } = req.body;
@@ -566,7 +565,6 @@ app.post('/api/admin/calendar/assign', [verifyToken, isPhysioOrAdmin], async (re
         res.status(500).json({ error: 'Error interno del servidor.' });
     }
 });
-// Desasignar una rutina de un día
 app.delete('/api/admin/calendar/unassign/:id', [verifyToken, isPhysioOrAdmin], async (req, res) => {
     try {
         const { id } = req.params; // ID de la asignación
