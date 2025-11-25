@@ -1,133 +1,137 @@
-/* frontend/src/styles/AdminExerciseManagePage.module.css */
+/* frontend/src/styles/AdminExerciseManagePage.module.css (OPTIMIZADO COMO ROUTINES) */
 
 .page {
   max-width: 430px; 
+  width: 100%;
   margin: 0 auto;
-  padding: 0 20px 20px 20px; 
+  padding: 0 20px 90px 20px; /* Espacio abajo para scroll y nav */
   font-family: 'Mulish', sans-serif;
   min-height: 100vh;
-  background-color: #FFFFFF;
+  background-color: #f8f9fa; /* Fondo gris claro igual que Rutinas */
   box-sizing: border-box;
+  position: relative;
 }
 
-/* Cabecera: "Gestionar Ejercicios" (Tamaño: 20px) */
+/* --- Cabecera Sticky --- */
 .header {
   display: flex;
   align-items: center;
   gap: 15px;
-  padding: 20px 0;
-  margin-top: 20px;
+  padding: 20px; /* Padding interno */
+  margin: 0 -20px 20px -20px; /* Margen negativo para ocupar todo el ancho */
   border-bottom: 1px solid #eee;
-  margin-bottom: 20px;
+  background-color: #FFFFFF;
+  position: sticky; /* Fijo arriba */
+  top: 0;
+  z-index: 10;
 }
+
 .backArrow {
   width: 24px; 
   height: 24px;
   cursor: pointer;
+  flex-shrink: 0;
 }
+
 .headerTitle {
   font-family: 'Mulish', sans-serif;
   font-weight: 700;
   font-size: 20px;
   color: #373F41;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Subtítulos: "Crear Nuevo Ejercicio" / "Lista de Ejercicios" (Tamaño: 19px) */
+/* Subtítulos */
 .pageTitle {
   font-family: 'Mulish', sans-serif;
   font-weight: 700;
-  font-size: 19px; /* <-- Más pequeño que la cabecera */
+  font-size: 19px;
   color: #373F41;
-  border-bottom: 1px solid #eee;
   padding-bottom: 10px;
-  margin-bottom: 20px;
+  margin: 10px 0 20px 0;
 }
 
-/* Formulario de Creación */
+/* --- Formulario (Estilo Tarjeta) --- */
 .form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 24px;
-  background: #f8f9fa;
+  gap: 15px;
+  padding: 20px;
+  background: #FFFFFF; /* Blanco */
   border: 1px solid #f0f0f0;
   border-radius: 12px;
   margin-bottom: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   box-sizing: border-box;
 }
+
 .input,
 .textarea {
   width: 100%;
   padding: 12px 16px;
-  font-family: 'Mulish', sans-serif; /* <-- Fuente Mulish */
-  font-size: 14px; /* <-- Tamaño 14px */
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
   color: #333; 
-  background: #FFFFFF;
+  background: #f8f9fa;
   border-radius: 30px; 
-  border: 1px solid #ddd;
+  border: 1px solid #eee;
   box-sizing: border-box;
 }
-.input::placeholder,
-.textarea::placeholder {
-  color: #737B7D;
-}
+
 .textarea {
   resize: vertical;
   min-height: 80px;
   border-radius: 16px;
 }
 
-/* Label: "Tutorial (Imagen o Video):" (Tamaño: 16px) */
-.fileInputLabelText {
-  font-family: 'Mulish', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: #373F41;
-  width: 100%;
-  text-align: center;
-}
+/* Input de Archivo */
 .fileInputWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  width: 100%;
+  padding: 10px;
+  border: 1px dashed #ddd;
+  border-radius: 12px;
 }
-/* Botón: "Elegir archivo" (Tamaño: 14px) */
+
+.fileInputLabelText {
+  font-size: 14px;
+  font-weight: 700;
+  color: #555;
+}
+
 .fileInputLabel {
-  padding: 8px 24px;
+  padding: 6px 20px;
   background: #FFFFFF;
-  border: 1px solid #4361EE; /* Azul */
-  color: #4361EE; /* Azul */
+  border: 1px solid #4361EE;
+  color: #4361EE;
   border-radius: 30px;
   cursor: pointer;
   font-weight: 700;
-  font-size: 14px;
-  transition: all 0.2s;
-  white-space: nowrap;
-  margin-top: 5px;
+  font-size: 13px;
 }
-.fileInputLabel:hover {
-  background: rgba(67, 97, 238, 0.05);
-}
-/* Texto: "No se eligió..." (Tamaño: 12px) */
+
 .fileName {
   font-size: 12px;
-  color: #555;
+  color: #777;
   font-style: italic;
+  text-align: center;
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
 }
-.hiddenInput {
-  display: none;
-}
-/* Botón: "Crear Ejercicio" (Tamaño: 16px) */
+
+.hiddenInput { display: none; }
+
+/* Botón Crear */
 .button {
-  padding: 14px 24px;
+  padding: 14px;
   background: #3F37C9;
   color: white;
   border: none;
@@ -136,105 +140,118 @@
   font-size: 16px;
   font-weight: 700;
   width: 100%;
+  margin-top: 10px;
 }
-.button:disabled {
-  background: #aaa;
-}
+.button:disabled { background: #aaa; }
 
-/* Lista de Ejercicios */
+/* --- Lista de Ejercicios (Estilo Tarjeta de Rutinas) --- */
 .exerciseList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
 }
-.exerciseItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px;
-  background: #f8f9fa;
+
+.exerciseCard {
+  background: #FFFFFF;
   border-radius: 12px;
+  padding: 15px;
   border: 1px solid #f0f0f0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: space-between; /* Separa contenido de botones */
+  align-items: flex-start;
+  gap: 15px;
 }
+
+/* Contenedor Izquierdo: Imagen + Textos */
 .exerciseInfo {
   display: flex;
-  align-items: center;
-  gap: 15px;
-  overflow: hidden; 
+  gap: 12px;
+  align-items: flex-start;
   flex-grow: 1;
+  min-width: 0; /* CRÍTICO: Permite que el texto se corte si es largo */
 }
+
 .mediaPreview {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
   border-radius: 8px;
-  background: #ddd;
-  flex-shrink: 0;
+  background: #eee;
+  flex-shrink: 0; /* Imagen fija */
 }
-/* Texto: "Agacharse" (Tamaño: 18px) */
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0; /* Necesario para heredar el truncado */
+  flex-grow: 1;
+}
+
 .exerciseName {
   font-weight: 700;
-  font-size: 18px;
+  font-size: 18px; /* Tamaño igual a Rutinas */
   color: #373F41;
+  margin: 0 0 4px 0;
+  /* Truncado de texto */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.exerciseDesc {
+  font-size: 13px;
+  color: #777;
+  margin: 0;
+  /* Limitar a 2 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- Botones de Acción (Columna Derecha) --- */
 .buttonActions {
   display: flex;
   flex-direction: column; 
   gap: 8px;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Botones fijos, no se aplastan */
 }
-.actionButton {
+
+.editButton {
   border: none;
   padding: 8px 12px;
   cursor: pointer;
   border-radius: 30px; 
   font-weight: 700;
   font-size: 12px;
-  width: 90px; 
+  width: 90px;
   text-align: center;
   box-sizing: border-box;
-  transition: all 0.2s;
-}
-/* Botón: "Borrar" (Tamaño: 12px) */
-.deleteButton {
-  composes: actionButton;
-  background: #FFFFFF;
-  color: #4361EE;
-  border: 1px solid #4361EE;
-}
-.deleteButton:hover {
-  background: #f8f9fa;
-}
-/* Botón: "Editar" (Tamaño: 12px) */
-.editButton {
-  composes: actionButton;
   background: #3F37C9;
   color: white;
   border: 1px solid #3F37C9;
+  transition: all 0.2s;
 }
-.editButton:hover {
-  background: #322c9e;
-}
+.editButton:hover { background: #322c9e; }
 
-/* (Oculta el ícono predeterminado del navegador) */
-.input.passwordInput::-webkit-reveal,
-.input.passwordInput::-webkit-password-reveal-button {
-  display: none;
-  -webkit-appearance: none;
+.deleteButton {
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 30px; 
+  font-weight: 700;
+  font-size: 12px;
+  width: 90px;
+  text-align: center;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  color: #4361EE;
+  border: 1px solid #4361EE;
+  transition: all 0.2s;
 }
-.input.passwordInput::-ms-reveal {
-  display: none;
-}
+.deleteButton:hover { background: #f8f9fa; }
 
-.error {
-  color: red;
-  font-size: 14px;
-}
-.message {
-  color: green;
-  font-size: 14px;
-}
+.error { color: red; font-size: 14px; text-align: center; margin-bottom: 15px; }
+.message { color: green; font-size: 14px; text-align: center; margin-bottom: 15px; }

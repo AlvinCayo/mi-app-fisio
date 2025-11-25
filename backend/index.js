@@ -704,6 +704,34 @@ app.get('/api/patient/my-routine-for-today', [verifyToken, isPatient], async (re
     }
 });
 
+// backend/index.js
+
+// Obtener información de contacto del Fisioterapeuta (Admin)
+app.get('/api/patient/contact-info', [verifyToken, isPatient], async (req, res) => {
+    try {
+        // Buscamos al primer usuario con rol 'admin' o 'fisioterapeuta'
+        const adminResult = await pool.query(
+            `SELECT nombre_completo, email, telefono 
+             FROM usuarios 
+             WHERE role = 'admin' OR role = 'fisioterapeuta' 
+             LIMIT 1`
+        );
+
+        if (adminResult.rows.length === 0) {
+            return res.status(404).json({ error: 'No se encontró información de contacto.' });
+        }
+
+        const admin = adminResult.rows[0];
+        
+        // Aquí podrías añadir una URL de foto si la guardaras en BD, 
+        // por ahora enviaremos los datos básicos.
+        res.status(200).json(admin);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error interno del servidor.' });
+    }
+});
 // ... (justo después del endpoint /api/patient/my-routine-for-today)
 
 // ¡NUEVO! Paciente envía un reporte diario

@@ -102,9 +102,10 @@
 }
 
 .physioText {
-  font-weight: 400;
-  font-size: 16px;
-  color: #737B7D;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 400;                  
+  font-size: 16px;                   
+  color: #737B7D;                  
 }
 
 /* --- Barra de Navegación Inferior --- */

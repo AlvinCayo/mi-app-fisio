@@ -1,14 +1,14 @@
-// frontend/src/HomePage.tsx (Corregido)
+// frontend/src/HomePage.tsx
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './styles/HomePage.module.css';
 import logo from './assets/logo.svg'; 
-// --- ¡Quitamos los iconos de navegación de aquí! ---
+
 import { ReportModal } from './ReportModal.tsx'; 
 import { jwtDecode } from 'jwt-decode';
+import adminPhoto from './assets/profile.jpg'; // Ya estaba importada aquí
 
-// Interfaz para el token decodificado
 interface DecodedToken {
   nombre: string;
 }
@@ -40,8 +40,7 @@ export function HomePage() {
   }
 
   return (
-    <> 
-      {/* --- ¡Quitamos el div className={styles.page} de aquí! --- */}
+    <div className={styles.page}> 
       
       <header className={styles.header}>
         <img src={logo} alt="Logo" className={styles.logo} />
@@ -69,22 +68,33 @@ export function HomePage() {
           </p>
           <button className={styles.cardButton}>Iniciar rutina diaria</button>
         </Link>
-
-        <section className={styles.card}>
-          <h2 className={styles.cardTitle}>Seu fisio</h2>
+        <Link 
+          to="/contact" 
+          className={styles.card} 
+          style={{ textDecoration: 'none' }} // Evita que el texto salga subrayado azul
+        >
+          <h2 className={styles.cardTitle}>Tu Fisioterapeuta</h2>
+          
           <div className={styles.physioInfo}>
-            <div className={styles.physioImage}></div> 
+            <img 
+              src={adminPhoto} 
+              alt="Foto del fisioterapeuta" 
+              className={styles.physioImage} 
+            />
             <span className={styles.physioText}>Dr(a). Fisioterapeuta</span>
           </div>
-          <button className={styles.cardButton}>Ponte en contacto</button>
-        </section>
+
+          {/* Cambiamos 'button' por 'div' para evitar errores de HTML, 
+              pero mantenemos la clase para que se vea igual */}
+          <div className={styles.cardButton}>
+            Ponte en contacto
+          </div>
+        </Link>
       </main>
-        
-      {/* --- ¡LA BARRA DE NAVEGACIÓN SE HA QUITADO DE AQUÍ! --- */}
       
       {isReportModalOpen && (
         <ReportModal onClose={() => setIsReportModalOpen(false)} />
       )}
-    </>
+    </div>
   );
 }

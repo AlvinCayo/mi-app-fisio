@@ -31,6 +31,7 @@ import { PatientExerciseExecutionPage } from './PatientExerciseExecutionPage.tsx
 // --- ¡NUEVAS IMPORTACIONES DE LAYOUTS! ---
 import { PatientLayout } from './PatientLayout.tsx'
 import { AdminLayout } from './AdminLayout.tsx'
+import { PatientContactPage } from './PatientContactPage.tsx';
 
 
 // Define las rutas
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/my-routine', element: <PatientRoutinePage /> },
+      { path: '/contact', element: <PatientContactPage /> },
     ]
   },
 

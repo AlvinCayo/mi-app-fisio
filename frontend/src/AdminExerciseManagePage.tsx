@@ -1,4 +1,4 @@
-// frontend/src/AdminExerciseManagePage.tsx (ACTUALIZADO - Enlaza con la página de edición)
+// frontend/src/AdminExerciseManagePage.tsx (ACTUALIZADO ESTILO RUTINAS)
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
@@ -8,7 +8,6 @@ import styles from './styles/AdminExerciseManagePage.module.css';
 import backArrow from './assets/back-arrow.svg'; 
 import logo from './assets/logo.svg'; 
 
-// (Definición de Tipos se queda igual)
 interface DecodedToken {
   role: 'admin' | 'paciente';
 }
@@ -26,14 +25,12 @@ export function AdminExerciseManagePage() {
   const navigate = useNavigate();
   const token = sessionStorage.getItem('authToken');
 
-  // (Estados del formulario se quedan igual)
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [mediaFile, setMediaFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // (fetchExercises y useEffect se quedan igual)
   const fetchExercises = useCallback(async () => {
     if (!token) return;
     try {
@@ -61,7 +58,6 @@ export function AdminExerciseManagePage() {
     fetchExercises();
   }, [token, navigate, fetchExercises]);
 
-  // (handleFileChange y handleSubmit se quedan igual)
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setMediaFile(e.target.files[0]);
@@ -111,7 +107,6 @@ export function AdminExerciseManagePage() {
     }
   };
 
-  // (handleDelete se queda igual)
   const handleDelete = async (exerciseId: number) => {
     if (!token || !window.confirm("¿Estás seguro de que quieres borrar este ejercicio?")) {
       return;
@@ -127,11 +122,9 @@ export function AdminExerciseManagePage() {
     }
   };
 
-  // --- ¡MODIFICACIÓN AQUÍ! Ahora navega a la página de edición ---
   const handleEdit = (exerciseId: number) => {
     navigate(`/admin/exercises/edit/${exerciseId}`);
   };
-
 
   return (
     <div className={styles.page}>
@@ -154,7 +147,7 @@ export function AdminExerciseManagePage() {
          <input 
           type="text"
           className={styles.input}
-          placeholder="Nombre del Ejercicio (ej: Agacharse)"
+          placeholder="Nombre del Ejercicio"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
         />
@@ -165,12 +158,12 @@ export function AdminExerciseManagePage() {
           onChange={(e) => setDescripcion(e.target.value)}
         />
         <div className={styles.fileInputWrapper}>
-          <label className={styles.fileInputLabelText}>Tutorial (Imagen o Video):</label>
+          <span className={styles.fileInputLabelText}>Multimedia:</span>
           <label htmlFor="file-upload" className={styles.fileInputLabel}>
             Elegir archivo
           </label>
           <span className={styles.fileName}>
-            {mediaFile ? mediaFile.name : "No se eligió ningún archivo"}
+            {mediaFile ? mediaFile.name : "Sin archivo seleccionado"}
           </span>
           <input 
             id="file-upload"
@@ -186,39 +179,47 @@ export function AdminExerciseManagePage() {
           className={styles.button}
           disabled={isLoading || !nombre}
         >
-          {isLoading ? "Creando..." : "Crear Ejercicio"}
+          {isLoading ? "Guardando..." : "Crear Ejercicio"}
         </button>
       </form>
-
 
       <h2 className={styles.pageTitle}>Lista de Ejercicios</h2>
       <div className={styles.exerciseList}>
         {exercises.length === 0 ? (
-          <p>No hay ejercicios creados.</p>
+          <p style={{textAlign: 'center', color: '#777'}}>No hay ejercicios creados.</p>
         ) : (
           exercises.map(ex => (
-            <div key={ex.id} className={styles.exerciseItem}>
+            // Usamos .exerciseCard para que sea igual a .routineCard
+            <div key={ex.id} className={styles.exerciseCard}>
+              
+              {/* Lado Izquierdo: Imagen + Textos */}
               <div className={styles.exerciseInfo}>
                 <img 
                   src={ex.url_media ? `${import.meta.env.VITE_API_URL}${ex.url_media}` : logo} 
                   alt={ex.nombre}
                   className={styles.mediaPreview}
                 />
-                <span className={styles.exerciseName}>{ex.nombre}</span>
+                <div className={styles.textContainer}>
+                  <h3 className={styles.exerciseName} title={ex.nombre}>{ex.nombre}</h3>
+                  <p className={styles.exerciseDesc} title={ex.descripcion}>
+                    {ex.descripcion || "Sin descripción"}
+                  </p>
+                </div>
               </div>
               
+              {/* Lado Derecho: Botones Fijos */}
               <div className={styles.buttonActions}>
-                 <button 
-                  onClick={() => handleDelete(ex.id)}
-                  className={styles.deleteButton}
-                >
-                  Borrar
-                </button>
                 <button 
                   onClick={() => handleEdit(ex.id)}
                   className={styles.editButton}
                 >
                   Editar
+                </button>
+                 <button 
+                  onClick={() => handleDelete(ex.id)}
+                  className={styles.deleteButton}
+                >
+                  Borrar
                 </button>
               </div>
               

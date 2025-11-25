@@ -1,106 +1,126 @@
-/* frontend/src/styles/VerifyPage.module.css */
+/* frontend/src/styles/VerifyPage.module.css (UNIFICADO AL ESTILO LOGIN) */
 
-/* Este es el contenedor blanco con sombra */
 .container {
-  width: 420px;
-  margin: 100px auto; /* 100px desde arriba, centrado */
-  font-family: 'Mulish', sans-serif;
-  padding: 40px;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra todo el contenido */
+  align-items: center;
+  max-width: 430px; /* Igual que Login */
+  margin: 0 auto;
+  padding: 0 26px; /* Igual que Login */
+  box-sizing: border-box;
+  /* Eliminamos bordes y sombras para estilo limpio */
 }
 
-/* "Verificar tu cuenta" */
+.logo {
+  width: 73px;
+  height: 88.12px;
+  margin-top: 67px; /* Igual que Login */
+  margin-bottom: 40px;
+}
+
+/* Títulos consistentes */
 .title {
   text-align: center;
-  color: #222; /* Más oscuro que antes */
+  color: #222;
   font-size: 28px;
   font-weight: 700;
   margin: 0 0 10px 0;
 }
 
-/* "Enviamos un código..." */
-.subtitle {
-  text-align: center;
-  color: #555;
-  font-size: 16px;
-  margin-bottom: 25px;
-}
-
-/* El formulario que contiene el input y el botón */
 .form {
   width: 100%;
+  max-width: 377px; /* Ancho de inputs igual que Login */
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
-/* El input "Código de Email" */
+/* Input redondeado igual que Login/Registro */
 .input {
   width: 100%;
-  padding: 12px 15px;
-  margin-bottom: 20px;
-  box-sizing: border-box;
-  border: 2px solid #e5a744; /* El borde dorado de tu imagen */
-  border-radius: 8px;
-  font-size: 16px;
+  height: 42px;
+  padding: 0 16px;
   font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  color: #333;
+  background: #F4F5F4;
+  border-radius: 30px; /* Borde redondeado */
+  border: 1px solid #F4F5F4;
+  box-sizing: border-box;
 }
 
 .input::placeholder {
-  color: #999;
+  color: #737B7D;
 }
 
-/* El botón "Verificar" */
+/* Botones redondeados */
+.buttonContainer {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
 .button {
   width: 100%;
-  padding: 14px;
-  background: #6f42c1; /* El morado de tu imagen */
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 8px;
-  font-size: 16px;
+  padding: 12px 18px;
+  font-family: 'Mulish', sans-serif;
   font-weight: 700;
+  font-size: 14px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: center;
+  border: none;
+  background: #3F37C9;
+  color: #FFFFFF;
 }
 
-/* El mensaje de error (si falla) */
+/* El botón de reenviar ahora usa el estilo "Outline" del sistema */
+.buttonOutline {
+  width: 100%;
+  padding: 12px 18px;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: center;
+  background: #FFFFFF;
+  color: #3C64B1;
+  border: 1px solid #4361EE;
+}
+
+.buttonOutline:disabled {
+  color: #999;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+
+.link {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  color: #4361EE;
+  text-decoration: none;
+  font-size: 14px;
+}
+
 .error {
   color: red;
   font-size: 0.9em;
   text-align: center;
-  margin-top: 15px;
 }
 
-/* ... (tus clases .container, .title, etc. van aquí arriba) ... */
-
-/* Estilo para el botón de reenviar (se ve como un enlace) */
-.resendButton {
-  background: none;
-  border: none;
-  color: #6f42c1; /* Color de tu marca */
-  cursor: pointer;
-  font-family: 'Mulish', sans-serif;
-  font-size: 14px;
-  margin-top: 20px;
-  text-align: center;
-  width: 100%;
-  padding: 0;
-}
-
-/* Estilo cuando el botón está desactivado (en cooldown) */
-.resendButton:disabled {
-  color: #999;
-  cursor: not-allowed;
-}
-
-/* Estilo para el mensaje de éxito (ej. "Código reenviado") */
 .successMessage {
   color: green;
   font-size: 0.9em;
   text-align: center;
-  margin-top: 15px;
+  background-color: #e6ffed;
+  padding: 10px;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
